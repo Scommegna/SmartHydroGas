@@ -27,14 +27,12 @@ export default function Main({ onLogout }) {
           </p>
         </section>
         <section className="transform-consumption">
-          <div className="content-wrapper">
             <h2 className="transform-title">Transforme sua Gestão de Consumo</h2>
             <p className="transform-description">
               Com o Smart HydroGas, você ganha mais tempo para o que importa.
               Experimente a tecnologia que alia simplicidade e inovação para
               tornar sua rotina mais eficiente.
             </p>
-          </div>
         </section>
       </main>
       <Footer />

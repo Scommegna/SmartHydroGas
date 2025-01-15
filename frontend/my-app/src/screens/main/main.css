@@ -32,18 +32,10 @@
 .transform-consumption {
   position: relative;
   width: 100%; 
-  height: 569px;
-  margin-left: 0;
-}
-
-.content-wrapper {
-  position: absolute;
-  width: 100%; 
-  height: 600px;
-  top: 0;
-  left: 0; 
+  height: 407px;
+  padding: 48px 0;
+  overflow: visible auto;
   background: #7b9fb1;
-  padding: 67px 80px;
 }
 
 .transform-title {

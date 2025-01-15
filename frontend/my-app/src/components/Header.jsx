@@ -1,6 +1,7 @@
 import React from "react";
 import "./Header.css";
 import axios from "axios";
+import SmartHydroGas from '../assets/smart-hydro-gas.png';
 
 export default function Header({ onLogout }) {
   const handleLogout = async () => {
@@ -15,9 +16,8 @@ export default function Header({ onLogout }) {
 
   return (
     <header className="header">
-      <div className="logo-header">
+      <img alt="Logo" class="logo-header" src={SmartHydroGas}/>
         <div className="logo-inner" />
-      </div>
       <nav className="navigation">
         <a href="#profile" className="nav-link">Meu Perfil</a>
         <a href="#invoices" className="nav-link">Visualizar Faturas</a>
