@@ -1,0 +1,350 @@
+:root {
+  --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
+    "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
+    "Source Han Sans CN", sans-serif;
+}
+
+.login-smart-hydrogas {
+    overflow: hidden;
+  }
+  
+  .login-smart-hydrogas,
+  .login-smart-hydrogas * {
+    box-sizing: border-box;
+  }
+  
+  input,
+  select,
+  textarea,
+  button {
+    outline: 0;
+  }
+  
+  .login-smart-hydrogas {
+    position: relative;
+    width: 1440px;
+    height: 895px;
+    margin: 0 auto;
+    background: #1a3986;
+    overflow: hidden;
+  }
+  
+  .overlap-group-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .overlap-group {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+  .wave {
+      position: absolute;
+      width: 1744.062px;
+      height: 1204px;
+      top: -211px;
+      left: -180.031px;
+      background: url(../../assets/images/96e42e4e-c4b2-4e9b-8b50-10d690c57513.png)
+      no-repeat center;
+      background-size: cover;
+      z-index: 1;
+  }
+  
+ .blue-minimalist-water {
+      position: absolute;
+      width: 250px; 
+      height: auto; 
+      top: 0; 
+      left: 0; 
+       background-image: url("../../assets/blue-minimalist-water-systems-logo-removebg-preview-1.png");
+       background-repeat: no-repeat;
+      background-size: contain;
+      z-index: 14; 
+  }
+  
+  .blob {
+      position: absolute;
+      width: 31.21%;
+      height: 47.24%;
+      bottom: -12.18%;
+      right: -5.42%;
+      background-image: url("../../assets/image.svg");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      z-index: 5;
+  }
+  
+  .rectangle {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: #6090a7;
+      z-index: 1;
+  }
+  .rectangle-1 {
+      position: absolute;
+      width: 504px;
+      height: 746px;
+      top: 75px;
+      left: 846px;
+      background: rgba(255, 255, 255, 0.95);
+      z-index: 6;
+      border-radius: 60px;
+  }
+  
+  .rectangle-2 {
+      position: absolute;
+      width: 1440px;
+      height: 321px;
+      top: 348px;
+      left: 0;
+      background: rgba(53, 69, 174, 0.65);
+      z-index: 4;
+  }
+  
+  
+  .esqueceu-sua-senha {
+      position: absolute;
+      width: 319px;
+      height: 38px;
+      top: 718px;
+      left: 935px;
+      font-family: Roboto, var(--default-font-family);
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 23.438px;
+      text-align: center;
+      letter-spacing: 0.4px;
+      z-index: 7;
+  }
+  
+  .text-wrapper {
+      color: #000000;
+      font-family: Montserrat, var(--default-font-family);
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 23.438px;
+      text-align: center;
+      letter-spacing: 0.4px;
+  }
+  
+  .span {
+      color: #1a3885;
+      font-family: Montserrat, var(--default-font-family);
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 23.438px;
+      text-align: center;
+      letter-spacing: 0.4px;
+  }
+  
+  .login-form {
+      position: absolute;
+      top: 348px;
+      left: 899px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 10;
+  }
+  
+  .text-wrapper-3 {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      color: #000000;
+      font-family: Montserrat, var(--default-font-family);
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 29.256px;
+      text-align: left;
+      white-space: nowrap;
+      letter-spacing: 0.48px;
+      margin-bottom: 5px;
+  }
+  
+  .text-wrapper-2 {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      color: #000000;
+      font-family: Montserrat, var(--default-font-family);
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 29.256px;
+      text-align: left;
+      white-space: nowrap;
+      letter-spacing: 0.48px;
+      margin-bottom: 5px;
+  }
+  
+  .ri-user-line {
+      position: absolute;
+      width: 33px;
+      height: 32px;
+      left: 16px;
+      top: 52px;
+       background-image: url("../../assets/ri-user-line.svg");
+      background-repeat: no-repeat;
+      background-size: contain;
+      z-index: 15;
+  }
+  
+  .mdi-password-outline {
+      position: absolute;
+      width: 31.289px;
+      height: 260px;
+      top: 52px;
+      left: 16px;
+        background-repeat: no-repeat;
+      background-size: contain;
+      z-index: 16;
+  }
+  
+  .ri-eye-close-line {
+      position: absolute;
+      width: 24px;
+      height: 260px;
+      top: 57px;
+      right: 15px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      z-index: 17;
+  }
+  
+  .rectangle-3 {
+      position: relative;
+      width: 398px;
+      height: 50px;
+      background: #cae5f2;
+      z-index: 11;
+      border-radius: 20px;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+      margin-bottom: 10px;
+  }
+  .rectangle-4 {
+      position: relative;
+      width: 398px;
+      height: 50px;
+      background: #cbe5f2;
+      z-index: 8;
+      border-radius: 20px;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+      margin-bottom: 10px;
+  }
+  
+  .input-field {
+      position: absolute;
+      width: 350px;
+      height: 35px;
+      top: 5px;
+      left: 50px;
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      color: #333;
+  }
+  
+  
+  .submit-button {
+      position: relative;
+      width: 238px;
+      height: 45px;
+      cursor: pointer;
+      background: #7b9fb1;
+      border: none;
+      z-index: 18;
+      border-radius: 20px;
+      box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+      margin-left: 85px;
+  }
+  
+  .text-wrapper-6 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      width: 238px;
+      height: 45px;
+      top: 0;
+      left: 0;
+      color: #ffffff;
+      font-family: Raleway, var(--default-font-family);
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 28.176px;
+      text-align: center;
+      letter-spacing: 0.48px;
+      z-index: 19;
+  }
+  
+  .text-wrapper-4 {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: absolute;
+      height: 59px;
+      top: 182px;
+      left: 952px;
+      color: #000000;
+      font-family: Montserrat, var(--default-font-family);
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 58.512px;
+      text-align: left;
+      white-space: nowrap;
+      z-index: 12;
+      text-shadow: 5px 6px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+  .text-wrapper-5 {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: absolute;
+      height: 59px;
+      top: 368px;
+      left: 174px;
+      color: #ffffff;
+      font-family: Montserrat, var(--default-font-family);
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 58.512px;
+      text-align: left;
+      white-space: nowrap;
+      z-index: 13;
+  }
+  
+  .p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      width: 483px;
+      height: 156px;
+      top: 456px;
+      left: 199px;
+      color: #ffffff;
+      font-family: Montserrat, var(--default-font-family);
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 39.008px;
+      text-align: center;
+      z-index: 14;
+  }
+  .blob-5 {
+      position: absolute;
+      width: 250px;
+      height: 200px;
+      top: 0; 
+      left: 0;
+      background-image: url("../../assets/blob.svg");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      z-index: 2;
+  }
