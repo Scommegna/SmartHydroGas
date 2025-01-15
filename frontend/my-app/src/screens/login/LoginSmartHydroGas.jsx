@@ -17,7 +17,7 @@ export const LoginSmartHydrogas = () => {
 
       setError("");
       try {
-          const response = await fetch("/api/login", { // Ajuste a rota para o seu endpoint de login
+          const response = await fetch("/api/login", {
               method: "POST",
               headers: {
                   "Content-Type": "application/json",
@@ -29,7 +29,7 @@ export const LoginSmartHydrogas = () => {
 
           if (response.ok) {
             console.log("Login bem-sucedido", data);
-             window.location.href = '/dashboard'
+             window.location.href = '/main'
            } else {
              setError(data.error_description || "Erro ao fazer login");
            }
@@ -46,10 +46,10 @@ export const LoginSmartHydrogas = () => {
                 <div className="wave" />
                      <img className="blue-minimalist-water" alt="Blue minimalist" src={blueMinimalistWaterSystemsLogoRemovebgPreview1}/>
                     
-                    <div className="rectangle" />
-                     <div className="rectangle-2" />
+                    <div className="login-rectangle" />
+                     <div className="login-rectangle-2" />
 
-                     <div className="rectangle-1" />
+                     <div className="login-rectangle-1" />
 
                       <div className="blob-5" />
                        <img className="blob" alt="Blob" src={image} />
@@ -59,14 +59,14 @@ export const LoginSmartHydrogas = () => {
                             Esqueceu sua senha? <br />
                         </span>
 
-                        <span className="span">Clique aqui para recuperá-la</span>
+                        <span className="login-span">Clique aqui para recuperá-la</span>
                     </p>
 
                     <form className="login-form" onSubmit={handleLogin}>
                         {error && <div className="error-message">{error}</div>}
                             <label htmlFor="email" className="text-wrapper-3">E-mail:</label>
                                 <img className="ri-user-line" alt="Ri user line" src={riUserLine} />
-                            <div className="rectangle-3">
+                            <div className="login-rectangle-3">
                                 <input
                                   type="email"
                                   id="email"
@@ -90,7 +90,7 @@ export const LoginSmartHydrogas = () => {
                                     alt="Ri eye close line"
                                     src={riEyeCloseLine}
                                 />
-                            <div className="rectangle-4">
+                            <div className="login-rectangle-4">
                                 <input 
                                   type="password"
                                   id="password"
@@ -102,7 +102,7 @@ export const LoginSmartHydrogas = () => {
                                 />
                             </div>
                           
-                            <button type="submit" className="rectangle-5 submit-button">
+                            <button type="submit" className="login-rectangle-5 submit-button">
                                 <div className="text-wrapper-6">Entrar</div>
                             </button>
 
