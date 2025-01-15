@@ -1,0 +1,61 @@
+.header {
+  position: relative;
+  width: 1440px;
+  height: 107px;
+  background: url(../assets/rectangle-header-1.png) no-repeat center;
+  background-size: cover;
+  z-index: 20;
+}
+
+.logo {
+  position: absolute;
+  width: 115px; 
+  height: 107px; 
+  top: 0;
+  left: 0;
+  background: url(../assets/blue-minimalist-water-systems-logo-removebg-preview-1.png) no-repeat center;
+  background-size: cover;
+  z-index: 30; /* Garante que a logo fique por cima do retângulo branco */
+}
+
+.logo-inner {
+  position: absolute; 
+  width: 115px;
+  height: 107px;
+  top: 0; 
+  left: 0; 
+  background: #ffffff;
+  z-index: 20; /* Coloca a logo-inner atrás da logo */
+}
+
+.navigation {
+  position: absolute;
+  top: 35px; 
+  display: flex;
+  align-items: center; 
+  gap: 20px;
+  right: 120px; /* Ajuste a posição horizontal conforme necessário */
+}
+
+.nav-link {
+  color: #ffffff;
+  font-family: Montserrat, var(--default-font-family);
+  font-size: 36px; 
+  font-weight: 400;
+  line-height: 36px;
+  text-decoration: none;
+  white-space: nowrap; 
+}
+
+.user-icon {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: 28px;
+  right: 30px;
+  background: url(../assets/logout-header.png) no-repeat center;
+  background-size: cover;
+  z-index: 50; 
+  border: none; 
+  cursor: pointer; 
+}

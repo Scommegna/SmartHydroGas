@@ -1,329 +1,129 @@
-:root {
-    --default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-      Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC",
-      "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei",
-      "Source Han Sans CN", sans-serif;
-  }
-  
-  .main-container {
-    overflow: hidden;
-  }
-  
-  .main-container,
-  .main-container * {
-    box-sizing: border-box;
-  }
-  
-  input,
-  select,
-  textarea,
-  button {
-    outline: 0;
-  }
-  
-  .main-container {
-    position: relative;
-    width: 1440px;
-    height: 1571px;
-    margin: 0 auto;
-    background: #ffffff;
-    overflow: hidden;
-  }
-  .flex-row-ee {
-    position: relative;
-    width: 1440px;
-    height: 621px;
-    margin: -48px 0 0 0;
-    z-index: 20;
-  }
-  .blue-minimalist-water {
-    position: absolute;
-    width: 187px;
-    height: 187px;
-    top: 0;
-    left: 0;
-    background: url(../assets/images/1111e0818d0188869406b1dadfbd83c20d628011.png)
-      no-repeat center;
-    background-size: cover;
-    z-index: 4;
-  }
-  .rectangle {
-    position: relative;
-    width: 115px;
-    height: 107px;
-    margin: 48px 0 0 36px;
-    background: #ffffff;
-    z-index: 3;
-  }
-  .material-symbols-light {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    top: 77px;
-    left: 1355px;
-    background: url(../assets/images/ecdae886-66a0-4e59-afc8-a6cd6e940aa4.png)
-      no-repeat center;
-    background-size: cover;
-    z-index: 20;
-    overflow: hidden;
-  }
-  .meu-perfil {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    position: absolute;
-    height: 36px;
-    top: 87px;
-    left: 761px;
-    color: #ffffff;
-    font-family: Montserrat, var(--default-font-family);
-    font-size: 36px;
-    font-weight: 400;
-    line-height: 36px;
-    text-align: left;
-    white-space: nowrap;
-    z-index: 2;
-  }
-  .visualizar-faturas {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    position: absolute;
-    height: 36px;
-    top: 87px;
-    left: 993px;
-    color: #ffffff;
-    font-family: Montserrat, var(--default-font-family);
-    font-size: 36px;
-    font-weight: 400;
-    line-height: 36px;
-    text-align: left;
-    white-space: nowrap;
-    z-index: 1;
-  }
-  .rectangle-1 {
-    position: absolute;
-    width: 1440px;
-    height: 466px;
-    top: 155px;
-    left: 0;
-    font-size: 0px;
-    background: #7b9fb1;
-    z-index: 5;
-  }
-  .bem-vindo-smart-hydrogas {
-    display: block;
-    position: relative;
-    height: 64px;
-    margin: 62px 0 0 254px;
-    color: #ffffff;
-    font-family: Raleway, var(--default-font-family);
-    font-size: 64px;
-    font-weight: 600;
-    line-height: 64px;
-    text-align: left;
-    white-space: nowrap;
-    z-index: 10;
-    text-shadow: -8px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-  .simplifique-gestao-monitoramento {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 1079px;
-    height: 200px;
-    margin: 48px 0 0 197px;
-    color: #ffffff;
-    font-family: Raleway, var(--default-font-family);
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 40px;
-    text-align: center;
-    z-index: 9;
-  }
-  .rectangle-2 {
-    position: relative;
-    width: 1440px;
-    height: 407px;
-    margin: 0 0 0 0;
-    font-size: 0px;
-    background: #c7d8e1;
-    z-index: 13;
-    overflow: visible auto;
-  }
-  .como-funciona {
-    display: block;
-    position: relative;
-    height: 64px;
-    margin: 48px 0 0 478px;
-    color: #507d94;
-    font-family: Raleway, var(--default-font-family);
-    font-size: 64px;
-    font-weight: 600;
-    line-height: 64px;
-    text-align: left;
-    white-space: nowrap;
-    z-index: 12;
-    text-shadow: -6px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-  .como-funciona-3 {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    position: absolute;
-    height: 64px;
-    top: 104px;
-    left: 494px;
-    color: #ffffff;
-    font-family: Raleway, var(--default-font-family);
-    font-size: 64px;
-    font-weight: 600;
-    line-height: 64px;
-    text-align: left;
-    white-space: nowrap;
-    z-index: 8;
-    text-shadow: -8px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-  .capture-envie-fotos {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    width: 1123px;
-    height: 242px;
-    top: 132px;
-    left: 168px;
-    color: #000000;
-    font-family: Raleway, var(--default-font-family);
-    font-size: 36px;
-    font-weight: 400;
-    line-height: 36px;
-    text-align: center;
-    z-index: 13;
-  }
-  .flex-row-ed {
-    position: relative;
-    width: 1493px;
-    height: 569px;
-    margin: 0 0 0 -53px;
-    z-index: 19;
-  }
-  .rectangle-4 {
-    position: absolute;
-    width: 1440px;
-    height: 390px;
-    top: 0;
-    left: 53px;
-    font-size: 0px;
-    background: #7b9fb1;
-    z-index: 7;
-  }
-  .transform-gestao-consumo {
-    display: block;
-    position: relative;
-    height: 64px;
-    margin: 67px 0 0 185px;
-    color: #ffffff;
-    font-family: Raleway, var(--default-font-family);
-    font-size: 64px;
-    font-weight: 600;
-    line-height: 64px;
-    text-align: left;
-    white-space: nowrap;
-    z-index: 14;
-    text-shadow: -8px 4px 4px rgba(0, 0, 0, 0.25);
-  }
-  .smart-hydrogas {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 1275px;
-    height: 120px;
-    margin: 67px 0 0 80px;
-    color: #ffffff;
-    font-family: Raleway, var(--default-font-family);
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 40px;
-    text-align: center;
-    z-index: 15;
-  }
-  .blue-minimalist-logo {
-    position: absolute;
-    width: 237px;
-    height: 205px;
-    top: 364px;
-    left: 45px;
-    background: url(../assets/images/1111e0818d0188869406b1dadfbd83c20d628011.png)
-      no-repeat center;
-    background-size: cover;
-    z-index: 19;
-  }
-  .rectangle-5 {
-    position: relative;
-    width: 181px;
-    height: 171px;
-    margin: 26px 0 0 30px;
-    background: #ffffff;
-    z-index: 18;
-  }
-  .tecnologia-transforma {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    position: absolute;
-    width: 1190px;
-    height: 32px;
-    top: 449px;
-    left: 0;
-    color: #ffffff;
-    font-family: Raleway, var(--default-font-family);
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 32px;
-    text-align: right;
-    white-space: nowrap;
-    z-index: 16;
-  }
-  .by-erika-lucas-veronica {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    position: absolute;
-    width: 426px;
-    height: 16px;
-    top: 524px;
-    left: 595px;
-    color: #ffffff;
-    font-family: Raleway, var(--default-font-family);
-    font-size: 16px;
-    font-weight: 200;
-    line-height: 16px;
-    text-align: right;
-    white-space: nowrap;
-    z-index: 17;
-  }
-  .rectangle-6 {
-    position: absolute;
-    width: 1440px;
-    height: 107px;
-    top: 0;
-    left: 0;
-    background: url(../assets/images/b9313650-3556-4af3-914f-a16aeacc4b74.png)
-      no-repeat center;
-    background-size: cover;
-  }
-  .rectangle-7 {
-    position: absolute;
-    width: 1440px;
-    height: 172px;
-    top: 1367px;
-    left: 0;
-    background: url(../assets/images/efb94df0-0337-4035-b7a3-4c74a41452e5.png)
-      no-repeat center;
-    background-size: cover;
-    z-index: 6;
-  }
-  
+
+.how-it-works {
+  position: relative;
+  width: 1440px;
+  height: 407px;
+  background: #c7d8e1;
+  padding: 48px 0;
+  overflow: visible auto;
+}
+
+.how-it-works-title {
+  margin: 0 0 20px 478px;
+  color: #507d94;
+  font-family: Raleway, var(--default-font-family);
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 64px;
+  text-shadow: -6px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.how-it-works-description {
+  width: 1123px;
+  margin: 0 auto;
+  color: #000000;
+  font-family: Raleway, var(--default-font-family);
+  font-size: 36px;
+  font-weight: 400;
+  line-height: 36px;
+  text-align: center;
+}
+
+.transform-consumption {
+  position: relative;
+  width: 1493px;
+  height: 569px;
+  margin-left: -53px;
+}
+
+.content-wrapper {
+  position: absolute;
+  width: 1440px;
+  height: 390px;
+  top: 0;
+  left: 53px;
+  background: #7b9fb1;
+  padding: 67px 80px;
+}
+
+.transform-title {
+  margin: 0 0 67px;
+  color: #ffffff;
+  font-family: Raleway, var(--default-font-family);
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 64px;
+  text-shadow: -8px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.transform-description {
+  width: 1275px;
+  margin: 0 auto;
+  color: #ffffff;
+  font-family: Raleway, var(--default-font-family);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 40px;
+  text-align: center;
+}
+
+.image-wrapper {
+  position: absolute;
+  width: 237px;
+  height: 205px;
+  top: 364px;
+  left: 45px;
+  background: url(../../assets/smart-hydro-gas.png) no-repeat center;
+  background-size: cover;
+}
+
+.image-inner {
+  position: relative;
+  width: 181px;
+  height: 171px;
+  margin: 26px 0 0 30px;
+  background: #ffffff;
+}
+
+.tagline {
+  position: absolute;
+  width: 1190px;
+  top: 449px;
+  left: 0;
+  color: #ffffff;
+  font-family: Raleway, var(--default-font-family);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 32px;
+  text-align: right;
+}
+
+.welcome {
+  position: relative;
+  width: 1440px;
+  height: 466px;
+  background: #7b9fb1;
+  padding: 62px 0;
+}
+
+.welcome-title {
+  margin: 0 0 48px 254px;
+  color: #ffffff;
+  font-family: Raleway, var(--default-font-family);
+  font-size: 64px;
+  font-weight: 600;
+  line-height: 64px;
+  text-align: left;
+  text-shadow: -8px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.welcome-description {
+  width: 1079px;
+  margin: 0 auto;
+  color: #ffffff;
+  font-family: Raleway, var(--default-font-family);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 40px;
+  text-align: center;
+}

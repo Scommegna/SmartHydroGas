@@ -7,7 +7,7 @@ import riEyeCloseLine from "../../assets/ri-eye-close-line.svg";
 import riUserLine from "../../assets/ri-user-line.svg";
 import "./style.css";
 
-export const LoginSmartHydrogas = () => {
+export const LoginSmartHydrogas = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -29,7 +29,7 @@ export const LoginSmartHydrogas = () => {
 
       if (response.ok) {
         console.log("Login bem-sucedido", data);
-        window.location.href = "/main";
+        onLoginSuccess();
       } else {
         setError(data.error_description || "Erro ao fazer login");
       }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LoginSmartHydrogas } from "./screens/login/LoginSmartHydroGas";
-import Main from "./screens/main/main";
+import Main from "./screens/main/Main.jsx";
 
 function App() {
   const [currentPage, setCurrentPage] = useState("login");
@@ -9,10 +9,14 @@ function App() {
     setCurrentPage("main");
   };
 
+  const handleLogout = () => {
+    setCurrentPage("login");
+  };
+
   return (
     <div>
       {currentPage === "login" && <LoginSmartHydrogas onLoginSuccess={handleLoginSuccess} />}
-      {currentPage === "main" && <Main />}
+      {currentPage === "main" && <Main onLogout={handleLogout} />}
     </div>
   );
 }
