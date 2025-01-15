@@ -2,6 +2,8 @@ import "dotenv/config";
 import connectDB from "./database/database";
 import express from "express";
 
+import cors from "cors";
+
 import bodyParser from "body-parser";
 
 import path from "path";
@@ -24,6 +26,8 @@ connectDB();
 app.use(express.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sessionConfig);
+
+app.use(cors());
 
 app.use("/", uploadRoutes);
 app.use("/", userRoutes);

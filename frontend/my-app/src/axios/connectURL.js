@@ -1,14 +1,8 @@
 import axios from "axios";
 
-// URL do backend
-const backendBaseUrl = "http://localhost:80/";
-
-// Exemplo de requisição GET
-axios
-  .get(`${backendBaseUrl}/rota`)
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
+// Cria uma instância personalizada
+export const api = axios.create({
+  baseURL: "http://localhost:80", // URL base para todas as rotas
+  timeout: 10000, // Timeout opcional (10 segundos)
+  headers: { "Content-Type": "application/json" },
+});
