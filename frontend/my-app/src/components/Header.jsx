@@ -15,7 +15,7 @@ export default function Header({ onLogout }) {
 
   return (
     <header className="header">
-      <div className="logo">
+      <div className="logo-header">
         <div className="logo-inner" />
       </div>
       <nav className="navigation">

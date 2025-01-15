@@ -3,22 +3,20 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import "./main.css";
 
-export default function Main({ onLogout }) { 
+export default function Main({ onLogout }) {
   return (
     <div className="main-container">
       <Header onLogout={onLogout} />
-      <main>
+      <main className="main-content">
         <section className="welcome">
           <h1 className="welcome-title">Bem-vindo ao Smart HydroGas</h1>
-            <p className="welcome-description">
-              Simplifique a gestão e o monitoramento das suas contas de água e gás
-              com o Smart HydroGas, a solução web inteligente que combina
-              tecnologia de processamento de imagem e inteligência artificial para
-              transformar sua experiência.
-            </p>
+          <p className="welcome-description">
+            Simplifique a gestão e o monitoramento das suas contas de água e gás
+            com o Smart HydroGas, a solução web inteligente que combina
+            tecnologia de processamento de imagem e inteligência artificial para
+            transformar sua experiência.
+          </p>
         </section>
-
-
         <section className="how-it-works">
           <h2 className="how-it-works-title">Como funciona?</h2>
           <p className="how-it-works-description">
@@ -28,7 +26,6 @@ export default function Main({ onLogout }) {
             suas faturas de maneira prática e confiável.
           </p>
         </section>
-
         <section className="transform-consumption">
           <div className="content-wrapper">
             <h2 className="transform-title">Transforme sua Gestão de Consumo</h2>
@@ -38,12 +35,6 @@ export default function Main({ onLogout }) {
               tornar sua rotina mais eficiente.
             </p>
           </div>
-          <div className="image-wrapper">
-            <div className="image-inner" />
-          </div>
-          <p className="tagline">
-            tecnologia que simplifica, inovação que transforma.
-          </p>
         </section>
       </main>
       <Footer />
