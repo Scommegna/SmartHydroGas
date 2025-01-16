@@ -1,0 +1,49 @@
+
+.fatura-page {
+  width: 1440px;
+  height: 1076px;
+  margin: 0 auto;
+  background: #ffffff;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei UI", "Microsoft Yahei", "Source Han Sans CN", sans-serif;
+}
+
+.fatura-main {
+  position: relative;
+  width: 1440px;
+  height: 802px;
+  padding: 38px 0;
+  background: #7b9fb1;
+}
+
+.fatura-title {
+  width: 236px;
+  height: 75px;
+  margin: 0 auto 52px;
+  color: #ffffff;
+  font-family: Raleway, sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 75px;
+  text-align: center;
+  letter-spacing: 1.28px;
+  text-shadow: -8px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.new-fatura-button {
+  display: block;
+  width: 338px;
+  height: 86px;
+  margin: 152px auto 0;
+  background: #507d94;
+  border: none;
+  border-radius: 50px;
+  color: #ffffff;
+  font-family: Raleway, sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 46.96px;
+  text-align: center;
+  letter-spacing: 0.8px;
+  cursor: pointer;
+}

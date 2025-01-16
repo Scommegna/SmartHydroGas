@@ -121,7 +121,7 @@ export const login = async (req: Request, res: Response) => {
     address: user.address,
   };
 
-  return res.status(200).json({ message: "Login Successful" });
+  return res.status(200).json({ message: "Login Successful", typeOfClient: user.type});
 };
 
 export const logout = async (req: Request, res: Response) => {

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import blob from "../../assets/blob.svg";
 import blueMinimalistWaterSystemsLogoRemovebgPreview1 from "../../assets/blue-minimalist-water-systems-logo-removebg-preview-1.png";
 import image from "../../assets/image.svg";
@@ -17,21 +18,17 @@ export const LoginSmartHydrogas = ({ onLoginSuccess }) => {
 
     setError("");
     try {
-      const response = await fetch("http://localhost/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post("http://localhost/login", {
+        email,
+        password
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
-        console.log("Login bem-sucedido", data);
-        onLoginSuccess();
+      if (response.status === 200) {
+        console.log("Login bem-sucedido", response.data);
+        const { typeOfClient } = response.data;
+        onLoginSuccess(typeOfClient);
       } else {
-        setError(data.error_description || "Erro ao fazer login");
+        setError(response.data.error_description || "Erro ao fazer login");
       }
     } catch (err) {
       console.error("Erro ao fazer login:", err);

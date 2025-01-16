@@ -19,8 +19,8 @@ export default function Header({ onLogout }) {
       <img alt="Logo" class="logo-header" src={SmartHydroGas}/>
         <div className="logo-inner" />
       <nav className="navigation">
-        <a href="#profile" className="nav-link">Meu Perfil</a>
-        <a href="#invoices" className="nav-link">Visualizar Faturas</a>
+        <a href="../screens/homePageUsers/homePage.tsx" className="nav-link">Meu Perfil</a>
+        <a href="../screens/bill/bill.jsx" className="nav-link">Visualizar Faturas</a>
       </nav>
       <button className="user-icon" onClick={handleLogout} />
     </header>
