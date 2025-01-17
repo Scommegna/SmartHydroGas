@@ -1,65 +1,78 @@
 import React from "react";
-import "./homePage.css";
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
-export default function Main() {
+export default function Main({ onLogout }) {
+  // Função para navegação ao perfil
+  const handleProfileClick = () => {
+    console.log("Navegar para a página de perfil");
+    // Implementar lógica para redirecionar ou atualizar o conteúdo da página
+  };
+
+  // Função para navegação às faturas
+  const handleFaturaClick = () => {
+    console.log("Navegar para a página de faturas");
+    // Implementar lógica para redirecionar ou atualizar o conteúdo da página
+  };
+
   return (
-    <div className="main-container">
-      <div className="frame" />
-      <div className="flex-row-e">
-        <div className="blue-minimalist-water-systems-logo">
-          <div className="rectangle" />
-        </div>
-        <div className="rectangle-1" />
-        <div className="material-symbols-light-logout" />
-        <span className="meu-perfil">Meu Perfil</span>
-        <span className="visualizar-faturas">Visualizar Faturas</span>
-        <div className="line" />
-        <div className="rectangle-2">
-          <div className="flex-column-fa">
-            <button className="rectangle-3">
-              <div className="tabler-edit" />
-              <span className="editar-perfil">Editar Perfil</span>
-            </button>
-            <span className="meu-perfil-4">Meu Perfil</span>
-            <span className="nome-completo">Nome Completo:</span>
-            <div className="rectangle-5">
-              <span className="fulano-da-silva">Fulano da Silva</span>
-            </div>
-            <span className="email">E-mail:</span>
-            <div className="rectangle-6">
-              <span className="email-7">email@email.com</span>
-            </div>
-            <span className="telefone">Telefone:</span>
-            <button className="rectangle-8">
-              <div className="div">
-                <span className="span">(</span>
-                <span className="span-9">01) 2345-6789</span>
+    <div className="d-flex flex-column min-vh-100">
+      {/* Passar todas as funções necessárias ao Header */}
+      <Header
+        onLogout={onLogout}
+        onProfileClick={handleProfileClick}
+        onFaturaClick={handleFaturaClick}
+      />
+      <main
+        className="main-content"
+        style={{ backgroundColor: "#29417e", minHeight: "100vh", color: "black" }}
+      >
+        {/* Main Content */}
+        <div className="container">
+          <div className="row">
+            {/* Profile Sidebar */}
+            <div className="col-md-4">
+              <div className="card bg-light">
+                <div className="card-body">
+                  <h5 className="card-title">Editar Perfil</h5>
+                  <ul className="list-unstyled">
+                    <li className="mb-2">Meu Perfil</li>
+                    <li className="mb-2">Visualizar Faturas</li>
+                  </ul>
+                </div>
               </div>
-            </button>
-            <span className="span-a">Endereço:</span>
-            <button className="button">
-              <span className="span-b">
-                Rua da Alegria, 123, bairro Legal, cidade Maravilha, MG, CEP:
-                XXXX-XXX
-              </span>
-            </button>
-          </div>
-          <div className="div-c">
-            <div className="div-d" />
+            </div>
+
+            {/* Profile Details */}
+            <div className="col-md-8">
+              <div className="card bg-white">
+                <div className="card-body">
+                  <h5 className="card-title">Informações do Perfil</h5>
+                  <div className="mb-3">
+                    <strong>Nome Completo:</strong>
+                    <div className="border rounded p-2">Fulano da Silva</div>
+                  </div>
+                  <div className="mb-3">
+                    <strong>E-mail:</strong>
+                    <div className="border rounded p-2">email@email.com</div>
+                  </div>
+                  <div className="mb-3">
+                    <strong>Telefone:</strong>
+                    <div className="border rounded p-2">(01) 2345-6789</div>
+                  </div>
+                  <div className="mb-3">
+                    <strong>Endereço:</strong>
+                    <div className="border rounded p-2">
+                      Rua da Alegria, 123, bairro Legal, cidade Maravilha, MG, CEP: XXXX-XXX
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="blue-minimalist-logo">
-          <div className="rectangle-e" />
-        </div>
-        <span className="text-e">
-          tecnologia que simplifica, inovação que transforma.
-        </span>
-        <span className="text-f">
-          2024 | By Érika Mara, Lucas Scommegna e Verônica França
-        </span>
-      </div>
-      <div className="rectangle-f" />
-      <div className="rectangle-10" />
+      </main>
+      <Footer />
     </div>
   );
 }
