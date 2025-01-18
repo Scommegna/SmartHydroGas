@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate, Navigate } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 import { LoginSmartHydrogas } from "./screens/login/LoginSmartHydroGas";
 import Main from "./screens/main/Main";
 import HomePageUser from "./screens/homePageUsers/homePage";
 import HomePageAdmin from "./screens/homePageAdmin/homePageAdmin";
 import FaturaPage from "./screens/bill/FaturaPage";
-import Header from "./components/Header";
-import Footer from "./components/Footer"; 
 
 function App() {
   return (
@@ -21,6 +21,18 @@ function AppWithHeaderAndFooter() {
   const navigate = useNavigate();
   const [role, setRole] = useState(null);
 
+  const handleLogout = () => {
+    setRole(null); // Limpa o estado de autenticação
+    navigate("/login"); // Redireciona para a página de login
+  };
+
+  // Chama o handleLogout sempre que a página de login for acessada
+  useEffect(() => {
+    if (location.pathname === "/login") {
+      handleLogout(); // Chama o logout se a página de login for acessada
+    }
+  }, [location.pathname]); // Só dispara quando a rota mudar
+
   const handleLoginSuccess = (role) => {
     setRole(role);
     if (role === "CLIENT") {
@@ -28,10 +40,6 @@ function AppWithHeaderAndFooter() {
     } else if (role === "ADMIN") {
       navigate("/admin");
     }
-  };
-
-  const handleLogout = () => {
-    navigate("/login");
   };
 
   const goToProfilePage = () => {
@@ -42,11 +50,10 @@ function AppWithHeaderAndFooter() {
     navigate("/faturas");
   };
 
-  const hideHeaderAndFooterPaths = ["/login"]; // Não renderiza o Header e Footer na página de login
+  const hideHeaderAndFooterPaths = ["/login", "/admin"];
 
   return (
     <>
-      {/* Exibe o Header apenas em páginas que não sejam a de login */}
       {!hideHeaderAndFooterPaths.includes(location.pathname) && (
         <Header
           onLogout={handleLogout}
@@ -64,7 +71,6 @@ function AppWithHeaderAndFooter() {
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
 
-      {/* Exibe o Footer apenas nas páginas que não sejam a de login */}
       {!hideHeaderAndFooterPaths.includes(location.pathname) && <Footer />}
     </>
   );

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import blob from "../../assets/blob.svg";
 import blueMinimalistWaterSystemsLogoRemovebgPreview1 from "../../assets/blue-minimalist-water-systems-logo-removebg-preview-1.png";
 import image from "../../assets/image.svg";
 import mdiPasswordOutline from "../../assets/mdi-password-outline.svg";
@@ -25,16 +24,15 @@ export const LoginSmartHydrogas = ({ onLoginSuccess }) => {
       {
         withCredentials: true 
       });
-
       if (response.status === 200) {
-        const { typeOfClient } = response.data;
+        console.log(response.data)
+        const { typeOfClient } = response.data.typeOfClient;
         onLoginSuccess(typeOfClient);
       } else {
         setError(response.data.error_description || "Erro ao fazer login");
       }
     } catch (err) {
-      console.error("Erro ao fazer login:", err);
-      setError("Erro ao fazer login. Tente novamente.");
+      console.error("Erro ao fazer login:", err.response ? err.response.data.message : err.message);
     }
   };
 

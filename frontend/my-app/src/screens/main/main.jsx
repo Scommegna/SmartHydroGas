@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-export default function Main({ onLogout }) {
+export default function Main() {
   return (
     <div className="d-flex flex-column min-vh-100">
       <main
