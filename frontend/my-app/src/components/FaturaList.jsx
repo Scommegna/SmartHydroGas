@@ -56,45 +56,51 @@ export default function FaturaList() {
         withCredentials: true,
       });
 
-      alert("Medição enviada com sucesso!");
-      setModalVisible(false);
+      alert("Fatura criada com sucesso!");
+      setModalVisible(false);  
+      setMeasureType(null);
+      setFile(null);  
     } catch (error) {
       console.error("Erro ao enviar a medição:", error);
-      alert("Erro ao enviar a medição.");
+      alert("Erro ao criar a fatura.");
     }
+  };
+
+  const handleCheckboxChange = (value) => {
+    setMeasureType(value);
   };
 
   return (
     <div>
       <div className="fatura-list">
-      <div className="fatura-header-row">
-        <span className="fatura-header-cell">Número da Fatura</span>
-        <span className="fatura-header-cell">Mês de Referência</span>
-        <span className="fatura-header-cell">Visualizar</span>
-        <span className="fatura-header-cell">Enviar Comprovante</span>
-      </div>
-
-      {/* Lista de Faturas */}
-      {faturaData.map((fatura, index) => (
-        <div key={fatura._id} className={`fatura-row ${index % 2 === 0 ? 'fatura-row-dark' : 'fatura-row-light'}`}>
-          <span className="fatura-cell">{fatura._id}</span>
-          <span className="fatura-cell">{new Date(fatura.measure_datetime).toLocaleDateString()}</span>
-          <button
-            className="fatura-action-button view-button"
-            aria-label="Visualizar fatura"
-            onClick={() => gerarPDF(fatura._id)}
-          >
-            <img src={PDF} alt="Visualizar" />
-          </button>
-          <button
-            className="fatura-action-button upload-button"
-            aria-label="Enviar comprovante"
-            onClick={() => setModalVisible(true)}
-          >
-            <img src={Upload} alt="Enviar comprovante" />
-          </button>
+        <div className="fatura-header-row">
+          <span className="fatura-header-cell">Número da Fatura</span>
+          <span className="fatura-header-cell">Mês de Referência</span>
+          <span className="fatura-header-cell">Visualizar</span>
+          <span className="fatura-header-cell">Enviar Comprovante</span>
         </div>
-      ))}
+
+        {/* Lista de Faturas */}
+        {faturaData.map((fatura, index) => (
+          <div key={fatura._id} className={`fatura-row ${index % 2 === 0 ? 'fatura-row-dark' : 'fatura-row-light'}`}>
+            <span className="fatura-cell">{fatura._id}</span>
+            <span className="fatura-cell">{new Date(fatura.measure_datetime).toLocaleDateString()}</span>
+            <button
+              className="fatura-action-button view-button"
+              aria-label="Visualizar fatura"
+              onClick={() => gerarPDF(fatura._id)}
+            >
+              <img src={PDF} alt="Visualizar" />
+            </button>
+            <button
+              className="fatura-action-button upload-button"
+              aria-label="Enviar comprovante"
+              onClick={() => setModalVisible(true)}
+            >
+              <img src={Upload} alt="Enviar comprovante" />
+            </button>
+          </div>
+        ))}
       </div>
 
       {/* Div com o botão "Nova Fatura" */}
@@ -115,25 +121,30 @@ export default function FaturaList() {
             <div>
               <label>
                 <input
-                  type="checkbox"
+                  type="radio"
+                  name="measureType"
                   value="Água"
-                  onChange={() => setMeasureType("Água")}
+                  checked={measureType === "Água"}
+                  onChange={() => handleCheckboxChange("Água")}
                 />
                 Água
               </label>
               <label>
                 <input
-                  type="checkbox"
+                  type="radio"
+                  name="measureType"
                   value="Gás"
-                  onChange={() => setMeasureType("Gás")}
+                  checked={measureType === "Gás"}
+                  onChange={() => handleCheckboxChange("Gás")}
                 />
                 Gás
               </label>
             </div>
             <div>
               <label>
-                Foto:
+                Foto do medidor de consumo:
                 <input type="file" onChange={handleFileChange} />
+                <p>Por favor, tire uma foto legível do medidor de consumo para que possamos registrar a medição corretamente.</p>
               </label>
             </div>
             <button onClick={handleSubmit}>Enviar</button>

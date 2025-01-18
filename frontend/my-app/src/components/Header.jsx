@@ -9,11 +9,17 @@ export default function Header({ onLogout, onProfileClick, onFaturaClick }) {
 
     if (action === "logout") {
       try {
-        const response = await axios.post("/logout");
-        console.log(response.data.message);
+        const response = await axios.post(
+          "http://localhost/logout",
+          {},
+          { withCredentials: true } 
+        );
         onLogout();
       } catch (error) {
-        console.error("Erro ao realizar logout:", error);
+        console.error(
+          "Erro ao realizar logout:",
+          error.response?.data || error.message
+        );
       }
     } else if (action === "profile") {
       onProfileClick();
@@ -27,14 +33,25 @@ export default function Header({ onLogout, onProfileClick, onFaturaClick }) {
       <img alt="Logo" className="logo-header" src={SmartHydroGas} />
       <div className="logo-inner" />
       <nav className="navigation">
-        <a href="#" className="nav-link" onClick={(e) => handleAction("profile", e)}>
+        <a
+          href="#"
+          className="nav-link"
+          onClick={(e) => handleAction("profile", e)}
+        >
           Meu Perfil
         </a>
-        <a href="#" className="nav-link" onClick={(e) => handleAction("faturas", e)}>
+        <a
+          href="#"
+          className="nav-link"
+          onClick={(e) => handleAction("faturas", e)}
+        >
           Visualizar Faturas
         </a>
       </nav>
-      <button className="user-icon" onClick={(e) => handleAction("logout", e)} />
+      <button
+        className="user-icon"
+        onClick={(e) => handleAction("logout", e)}
+      />
     </header>
   );
 }

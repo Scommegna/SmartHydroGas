@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh; /* Garante que a página ocupe toda a altura da tela */
+  background-color: #f4f7fc; /* Adiciona um fundo claro à página */
 }
 
 /* Mantém a área principal da fatura com flexbox */
@@ -21,27 +22,30 @@
   width: 90%;
   max-width: 1100px;
   margin: 0 auto;
-  border: 3px solid #1a3986;
-  border-radius: 10px 10px 0 0;
+  border: 2px solid #1a3986;
+  border-radius: 10px;
   overflow: hidden;
   flex-grow: 1; /* Faz a lista ocupar o espaço restante */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Adiciona sombra sutil */
+  background-color: #ffffff;
 }
 
 /* Cabeçalho da lista de faturas */
 .fatura-header-row {
   display: flex;
-  background: #ffffff;
+  background: #f7f7f7;
   height: 50px;
   align-items: center;
+  border-bottom: 1px solid #e0e0e0; /* Linha de separação */
 }
 
 /* Definindo as células do cabeçalho */
 .fatura-header-cell {
   flex: 1;
-  color: #000000;
-  font-family: Montserrat, sans-serif;
-  font-size: 18px;
-  font-weight: 700;
+  color: #333333;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
   line-height: 22px;
   text-align: center;
   letter-spacing: 0.36px;
@@ -50,12 +54,13 @@
 /* Estilo das linhas de faturas */
 .fatura-row {
   display: flex;
-  height: 40px;
+  height: 45px;
   align-items: center;
+  transition: background 0.3s ease; /* Transição suave */
 }
 
 .fatura-row-dark {
-  background: #44617d;
+  background: #f1f1f1;
 }
 
 .fatura-row-light {
@@ -64,34 +69,46 @@
 
 .fatura-cell {
   flex: 1;
-  color: #ffffff;
-  font-family: Montserrat, sans-serif;
-  font-size: 24px;
+  color: #666666;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 29px;
+  line-height: 22px;
   text-align: center;
   letter-spacing: 0.48px;
 }
 
+/* Células nas linhas claras */
 .fatura-row-light .fatura-cell {
-  color: #507d94;
+  color: #333333;
+}
+
+/* Efeito de hover nas linhas */
+.fatura-row:hover {
+  background-color: #e6f0ff; /* Cor de destaque ao passar o mouse */
 }
 
 /* Estilo dos botões de ação na fatura */
 .fatura-action-button {
-  width: 35px;
-  height: 35px;
+  width: 28px; /* Diminuindo o tamanho */
+  height: 28px;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
-  margin: 0 8px;
+  margin: 0 6px; /* Diminui o espaço entre os botões */
+  transition: transform 0.2s ease; /* Adiciona animação de escala */
 }
 
 .fatura-action-button img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Efeito de hover nos botões de ação */
+.fatura-action-button:hover {
+  transform: scale(1.1); /* Aumenta o tamanho do botão ao passar o mouse */
 }
 
 /* Modal de envio */
@@ -101,26 +118,77 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6); /* Ajusta a opacidade do fundo */
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: fadeIn 0.3s ease-out; /* Animação suave para a modal */
 }
 
 .modal-content {
   background-color: white;
-  padding: 20px;
-  border-radius: 5px;
+  padding: 20px 30px;
+  border-radius: 8px;
   width: 400px;
-  text-align: center;
+  text-align: left; /* Alinha o texto à esquerda */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Adiciona sombra na modal */
+  animation: slideUp 0.3s ease-out; /* Animação de entrada para a modal */
+  display: flex;
+  flex-direction: column; /* Organiza os itens da modal em coluna */
+  align-items: center; /* Centraliza os itens horizontalmente */
+  gap: 15px; /* Adiciona espaço entre os itens */
+}
+
+/* Animação de entrada da modal */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animação de entrada da modal com slide */
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .modal-content input {
-  margin: 10px 0;
+  margin: 0; /* Remove a margem extra */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  text-align: center; /* Alinha o texto dos campos */
 }
 
+/* Estilo do botão na modal */
 .modal-content button {
-  margin: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px; /* Tamanho ajustado para botões menores */
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  width: 100%; /* Faz o botão ocupar toda a largura disponível */
+  max-width: 200px; /* Limita o tamanho máximo do botão */
+}
+
+/* Efeito de hover no botão da modal */
+.modal-content button:hover {
+  background-color: #0056b3;
 }
 
 /* Contêiner do botão "Nova Fatura" */
@@ -128,21 +196,23 @@
   margin-top: auto; /* Empurra o botão para baixo */
   display: flex;
   justify-content: center;
-  padding: 10px; /* Diminui o padding */
+  padding: 15px 0;
 }
 
 /* Estilo do botão "Nova Fatura" */
 .new-fatura-button {
-  padding: 8px 16px; /* Diminui o tamanho do padding do botão */
+  padding: 10px 20px; /* Tamanho ajustado para botões menores */
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 30px; /* Deixa o botão com bordas arredondadas */
   cursor: pointer;
-  outline: none; /* Remove a borda azul do foco */
-  font-size: 14px; /* Reduz o tamanho da fonte */
+  outline: none;
+  font-size: 14px; /* Ajusta o tamanho da fonte */
+  transition: background-color 0.3s ease;
 }
 
 .new-fatura-button:hover {
   background-color: #0056b3;
+  transform: scale(1.05); /* Efeito de aumento suave no botão */
 }
