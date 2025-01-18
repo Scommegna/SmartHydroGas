@@ -100,17 +100,6 @@ export default function Main({ onLogout }) {
                 />
               </div>
               <div className="mb-3">
-                <label htmlFor="cpf" className="form-label">Telefone</label>
-                <input
-                  type="text"
-                  id="cpf"
-                  name="cpf"
-                  value={editData?.cpf || ""}
-                  onChange={handleInputChange}
-                  className="form-control"
-                />
-              </div>
-              <div className="mb-3">
                 <label htmlFor="address" className="form-label">Endereço</label>
                 <input
                   type="text"
@@ -134,10 +123,6 @@ export default function Main({ onLogout }) {
               <div className="mb-3">
                 <strong>E-mail:</strong>
                 <div className="border p-2 rounded bg-light">{userData ? userData.email : "Carregando..."}</div>
-              </div>
-              <div className="mb-3">
-                <strong>Telefone:</strong>
-                <div className="border p-2 rounded bg-light">{userData ? userData.cpf : "Carregando..."}</div>
               </div>
               <div className="mb-3">
                 <strong>Endereço:</strong>
