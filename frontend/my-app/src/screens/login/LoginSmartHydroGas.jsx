@@ -17,20 +17,16 @@ export const LoginSmartHydrogas = ({ onLoginSuccess }) => {
 
     setError("");
     try {
-      const response = await axios.post("http://localhost/login", {
+      const response = await axios.post("http://localhost:80/login", {
         email,
         password
       },
       {
         withCredentials: true 
       });
-      if (response.status === 200) {
         console.log(response.data)
         const { typeOfClient } = response.data.typeOfClient;
         onLoginSuccess(typeOfClient);
-      } else {
-        setError(response.data.error_description || "Erro ao fazer login");
-      }
     } catch (err) {
       console.error("Erro ao fazer login:", err.response ? err.response.data.message : err.message);
     }

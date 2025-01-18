@@ -41,6 +41,14 @@ app.use(cors({
   credentials: true,               
 }));
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE,PUT");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 app.use(express.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sessionConfig);
