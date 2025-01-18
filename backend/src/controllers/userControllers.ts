@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { isAuthenticated } from "../middlewares/auth";
 
 import { ObjectId } from "mongodb";
 
@@ -76,14 +77,28 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
+  if (req.session.userData) {
+    return res.status(200).json({
+      message: "User already logged in",
+      typeOfClient: req.session.userData.typeOfClient,
+    });
+  }
+
   const { email, password } = req.body;
 
   if (!email || !password) {
     const { statusCode, errorCode } = BadRequestError();
-
     return res.status(statusCode).json({
       errorCode,
-      error_description: "Email or password were not given.",
+      error_description: "Email and password are required.",
+    });
+  }
+
+  if (!isValidEmail(email)) {
+    const { statusCode, errorCode } = BadRequestError();
+    return res.status(statusCode).json({
+      errorCode,
+      error_description: "Invalid email format.",
     });
   }
 
@@ -91,24 +106,19 @@ export const login = async (req: Request, res: Response) => {
 
   if (!user) {
     const { statusCode, errorCode } = NotFoundError("user");
-
     return res.status(statusCode).json({
       errorCode,
       error_description: "User not found.",
     });
   }
 
-  const isPasswordCorrect = await compareHashedPassword(
-    password,
-    user.password
-  );
+  const isPasswordCorrect = await compareHashedPassword(password, user.password);
 
   if (!isPasswordCorrect) {
     const { statusCode, errorCode } = BadRequestError();
-
     return res.status(statusCode).json({
       errorCode,
-      error_description: "Password incorrect.",
+      error_description: "Incorrect password.",
     });
   }
 
@@ -120,8 +130,12 @@ export const login = async (req: Request, res: Response) => {
     name: user.name,
     address: user.address,
   };
+  console.log(req.session.userData)
 
-  return res.status(200).json({ message: "Login Successful", typeOfClient: user.type});
+  return res.status(200).json({
+    message: "Login successful.",
+    typeOfClient: user.type,
+  });
 };
 
 export const logout = async (req: Request, res: Response) => {
@@ -182,3 +196,32 @@ export const deleteUser = async (req: Request, res: Response) => {
     updatedCount: deletedUser.deletedCount,
   });
 };
+
+export const getProfile = (req: Request, res: Response) => {
+  if (!req.session.userData) {
+    return res.status(401).json({
+      errorCode: "USER_NOT_AUTHENTICATED",
+      error_description: "User is not authenticated. Please login to access the profile.",
+    });
+  }
+
+  const { name, email, cpf, address } = req.session.userData;
+
+  if (!name || !email || !cpf || !address) {
+    return res.status(400).json({
+      errorCode: "USER_PROFILE_INCOMPLETE",
+      error_description: "Some user profile data is missing. Please ensure the profile is complete.",
+    });
+  }
+
+  return res.status(200).json({
+    message: "User profile retrieved successfully",
+    profile: {
+      name,
+      email,
+      cpf,
+      address,
+    },
+  });
+};
+

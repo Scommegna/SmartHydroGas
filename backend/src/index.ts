@@ -3,7 +3,6 @@ import connectDB from "./database/database";
 import express from "express";
 
 import cors from "cors";
-
 import bodyParser from "body-parser";
 
 import path from "path";
@@ -16,6 +15,7 @@ import { sessionConfig } from "./config/sessionConfig";
 import swaggerUi from "swagger-ui-express";
 
 import YAML from "yamljs";
+import session from "express-session";
 
 const app = express();
 const port = 80;
@@ -23,11 +23,26 @@ const swaggerFilePath = path.resolve(__dirname, "./swagger/swagger.yaml");
 
 connectDB();
 
+app.use(session({
+  secret: "secretKey", 
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, 
+    maxAge: 24 * 60 * 60 * 1000, 
+    httpOnly: true, 
+    sameSite: "lax", 
+  }
+}));
+
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  credentials: true,               
+}));
+
 app.use(express.json({ limit: "10mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sessionConfig);
-
-app.use(cors());
 
 app.use("/", uploadRoutes);
 app.use("/", userRoutes);

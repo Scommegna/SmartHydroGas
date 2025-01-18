@@ -1,69 +1,91 @@
-import React from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+interface UserData {
+  name: string;
+  email: string;
+  cpf: string;
+  address: string;
+}
 
 export default function Main({ onLogout }) {
-  // Função para navegação ao perfil
+  const navigate = useNavigate();
+
+  const [userData, setUserData] = useState<UserData | null>(null);
+
+  const fetchUserProfile = async () => {
+    try {
+      const response = await axios.get("http://localhost/profile", {
+        withCredentials: true, 
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("User profile data:", response.data);
+      setUserData(response.data.profile);
+    } catch (error) {
+      console.error("Error fetching profile data:", error);
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+    }
+  };
+  
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
   const handleProfileClick = () => {
-    console.log("Navegar para a página de perfil");
-    // Implementar lógica para redirecionar ou atualizar o conteúdo da página
+    navigate("/profile");
   };
 
-  // Função para navegação às faturas
   const handleFaturaClick = () => {
-    console.log("Navegar para a página de faturas");
-    // Implementar lógica para redirecionar ou atualizar o conteúdo da página
+    navigate("/faturas");
   };
 
   return (
-    <div className="d-flex flex-column min-vh-100">
-      {/* Passar todas as funções necessárias ao Header */}
-      <Header
-        onLogout={onLogout}
-        onProfileClick={handleProfileClick}
-        onFaturaClick={handleFaturaClick}
-      />
+    <div className="d-flex flex-column min-vh-100" style={{ height: "100vh" }}>
       <main
-        className="main-content"
-        style={{ backgroundColor: "#29417e", minHeight: "100vh", color: "black" }}
+        className="main-content flex-grow-1"
+        style={{
+          backgroundColor: "#29417e",
+          color: "black",
+          marginTop: "80px",
+          paddingBottom: "20px",
+        }}
       >
-        {/* Main Content */}
         <div className="container">
           <div className="row">
-            {/* Profile Sidebar */}
-            <div className="col-md-4">
-              <div className="card bg-light">
-                <div className="card-body">
-                  <h5 className="card-title">Editar Perfil</h5>
-                  <ul className="list-unstyled">
-                    <li className="mb-2">Meu Perfil</li>
-                    <li className="mb-2">Visualizar Faturas</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
             {/* Profile Details */}
             <div className="col-md-8">
-              <div className="card bg-white">
+              <div className="card bg-white shadow-sm">
                 <div className="card-body">
-                  <h5 className="card-title">Informações do Perfil</h5>
+                  <h5 className="card-title text-primary">Informações do Perfil</h5>
                   <div className="mb-3">
                     <strong>Nome Completo:</strong>
-                    <div className="border rounded p-2">Fulano da Silva</div>
+                    <div className="border rounded p-2 bg-light">
+                      {userData ? userData.name : "Carregando..."}
+                    </div>
                   </div>
                   <div className="mb-3">
                     <strong>E-mail:</strong>
-                    <div className="border rounded p-2">email@email.com</div>
+                    <div className="border rounded p-2 bg-light">
+                      {userData ? userData.email : "Carregando..."}
+                    </div>
                   </div>
                   <div className="mb-3">
                     <strong>Telefone:</strong>
-                    <div className="border rounded p-2">(01) 2345-6789</div>
+                    <div className="border rounded p-2 bg-light">
+                      {userData ? userData.cpf : "Carregando..."}
+                    </div>
                   </div>
                   <div className="mb-3">
                     <strong>Endereço:</strong>
-                    <div className="border rounded p-2">
-                      Rua da Alegria, 123, bairro Legal, cidade Maravilha, MG, CEP: XXXX-XXX
+                    <div className="border rounded p-2 bg-light">
+                      {userData ? userData.address : "Carregando..."}
                     </div>
                   </div>
                 </div>
@@ -72,7 +94,6 @@ export default function Main({ onLogout }) {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

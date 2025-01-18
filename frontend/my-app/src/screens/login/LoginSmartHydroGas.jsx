@@ -21,10 +21,12 @@ export const LoginSmartHydrogas = ({ onLoginSuccess }) => {
       const response = await axios.post("http://localhost/login", {
         email,
         password
+      },
+      {
+        withCredentials: true 
       });
 
       if (response.status === 200) {
-        console.log("Login bem-sucedido", response.data);
         const { typeOfClient } = response.data;
         onLoginSuccess(typeOfClient);
       } else {

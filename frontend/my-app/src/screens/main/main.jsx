@@ -1,16 +1,16 @@
 import React from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Main({ onLogout }) {
   return (
     <div className="d-flex flex-column min-vh-100">
-      <Header onLogout={onLogout} />
       <main
         className="main-content"
         style={{
-          top: "80px",
+          backgroundColor: "#29417e",
+          minHeight: "100vh",
+          color: "black",
+          marginTop: "80px", // Ajustando a margem superior
         }}
       >
         {/* Welcome Section */}
@@ -129,7 +129,6 @@ export default function Main({ onLogout }) {
           </p>
         </section>
       </main>
-      <Footer />
     </div>
   );
 }
