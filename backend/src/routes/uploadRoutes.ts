@@ -29,5 +29,10 @@ router.get(
   isAdmin,
   getBillingsReportData
 );
+router.post(
+  "/generate-pdf/:faturaId", 
+  isAuthenticated,
+  createUpload  
+);
 
 export { router };

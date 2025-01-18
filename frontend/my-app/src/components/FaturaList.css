@@ -1,72 +1,148 @@
+/* Adiciona flexbox para o layout da página */
+.fatura-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Garante que a página ocupe toda a altura da tela */
+}
 
+/* Mantém a área principal da fatura com flexbox */
+.fatura-main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%; /* Ocupa toda a largura da tela */
+  margin-top: 80px; /* Ajusta a margem superior */
+  overflow-x: hidden;
+  overflow-y: auto; /* Permite rolagem vertical se necessário */
+}
+
+/* A lista de faturas ocupa 90% da largura da tela e com limites */
 .fatura-list {
-    width: 1181px;
-    margin: 0 auto;
-    border: 3px solid #1a3986;
-    border-radius: 10px 10px 0 0;
-    overflow: hidden;
-  }
-  
-  .fatura-header-row {
-    display: flex;
-    background: #ffffff;
-    height: 60px;
-    align-items: center;
-  }
-  
-  .fatura-header-cell {
-    flex: 1;
-    color: #000000;
-    font-family: Montserrat, sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 29px;
-    text-align: center;
-    letter-spacing: 0.48px;
-  }
-  
-  .fatura-row {
-    display: flex;
-    height: 50px;
-    align-items: center;
-  }
-  
-  .fatura-row-dark {
-    background: #44617d;
-  }
-  
-  .fatura-row-light {
-    background: #ffffff;
-  }
-  
-  .fatura-cell {
-    flex: 1;
-    color: #ffffff;
-    font-family: Montserrat, sans-serif;
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 39px;
-    text-align: center;
-    letter-spacing: 0.64px;
-  }
-  
-  .fatura-row-light .fatura-cell {
-    color: #507d94;
-  }
-  
-  .fatura-action-button {
-    width: 45px;
-    height: 45px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    margin: 0 10px;
-  }
-  
-  .fatura-action-button img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+  border: 3px solid #1a3986;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  flex-grow: 1; /* Faz a lista ocupar o espaço restante */
+}
+
+/* Cabeçalho da lista de faturas */
+.fatura-header-row {
+  display: flex;
+  background: #ffffff;
+  height: 50px;
+  align-items: center;
+}
+
+/* Definindo as células do cabeçalho */
+.fatura-header-cell {
+  flex: 1;
+  color: #000000;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 22px;
+  text-align: center;
+  letter-spacing: 0.36px;
+}
+
+/* Estilo das linhas de faturas */
+.fatura-row {
+  display: flex;
+  height: 40px;
+  align-items: center;
+}
+
+.fatura-row-dark {
+  background: #44617d;
+}
+
+.fatura-row-light {
+  background: #ffffff;
+}
+
+.fatura-cell {
+  flex: 1;
+  color: #ffffff;
+  font-family: Montserrat, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 29px;
+  text-align: center;
+  letter-spacing: 0.48px;
+}
+
+.fatura-row-light .fatura-cell {
+  color: #507d94;
+}
+
+/* Estilo dos botões de ação na fatura */
+.fatura-action-button {
+  width: 35px;
+  height: 35px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 8px;
+}
+
+.fatura-action-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Modal de envio */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  text-align: center;
+}
+
+.modal-content input {
+  margin: 10px 0;
+}
+
+.modal-content button {
+  margin: 10px;
+}
+
+/* Contêiner do botão "Nova Fatura" */
+.new-fatura-container {
+  margin-top: auto; /* Empurra o botão para baixo */
+  display: flex;
+  justify-content: center;
+  padding: 10px; /* Diminui o padding */
+}
+
+/* Estilo do botão "Nova Fatura" */
+.new-fatura-button {
+  padding: 8px 16px; /* Diminui o tamanho do padding do botão */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none; /* Remove a borda azul do foco */
+  font-size: 14px; /* Reduz o tamanho da fonte */
+}
+
+.new-fatura-button:hover {
+  background-color: #0056b3;
+}
