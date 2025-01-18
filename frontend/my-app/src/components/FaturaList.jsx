@@ -47,7 +47,56 @@ function Modal({ visible, onClose, onSubmit, onFileChange, onTypeChange, measure
   );
 }
 
-function FaturaRow({ fatura, onGeneratePDF, onUpload }) {
+function ModalComprovante({ visible, onClose, faturaId }) {
+  const [file, setFile] = useState(null);
+  const [status, setStatus] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+
+  if (!visible) return null;
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile && selectedFile.type.startsWith('image/')) {
+      setFile(selectedFile);
+      setStatus('');
+    } else {
+      setStatus('Por favor, selecione uma imagem válida.');
+      setFile(null);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!file) {
+      setStatus('Por favor, selecione um arquivo.');
+      return;
+    }
+
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append('comprovante', file);
+
+    try {
+      const response = await fetch('/proof', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setStatus('Comprovante enviado com sucesso!');
+      } else {
+        setStatus(result.message || 'Falha ao enviar o comprovante.');
+      }
+    } catch (error) {
+      setStatus('Erro ao enviar o comprovante.');
+    } finally {
+      setIsUploading(false);
+    }
+  };
+}
+
+function FaturaRow({ fatura, onGeneratePDF, onUploadImage }) {
   return (
     <div className="fatura-row">
       <span className="fatura-cell">{fatura._id}</span>
@@ -62,7 +111,7 @@ function FaturaRow({ fatura, onGeneratePDF, onUpload }) {
       <button
         className="fatura-action-button upload-button"
         aria-label="Enviar comprovante"
-        onClick={onUpload}
+        onClick={() => onUploadImage(fatura._id)} 
       >
         <img src={Upload} alt="Enviar comprovante" />
       </button>
@@ -72,9 +121,11 @@ function FaturaRow({ fatura, onGeneratePDF, onUpload }) {
 
 export default function FaturaList() {
   const [faturaData, setFaturaData] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [measureType, setMeasureType] = useState(null);
+  const [modalFaturaVisible, setModalFaturaVisible] = useState(false); 
+  const [modalComprovanteVisible, setModalComprovanteVisible] = useState(false); 
+  const [faturaId, setFaturaId] = useState(null);
   const [file, setFile] = useState(null);
+  const [measureType, setMeasureType] = useState(null);
 
   useEffect(() => {
     const fetchFaturas = async () => {
@@ -125,13 +176,18 @@ export default function FaturaList() {
         withCredentials: true,
       });
       alert("Fatura criada com sucesso!");
-      setModalVisible(false);
+      setModalFaturaVisible(false);
       setMeasureType(null);
       setFile(null);
     } catch (error) {
       console.error("Erro ao enviar a medição:", error);
       alert("Erro ao criar a fatura.");
     }
+  };
+
+  const handleUpload = (faturaId) => {
+    setFaturaId(faturaId);
+    setModalComprovanteVisible(true);
   };
 
   return (
@@ -148,25 +204,33 @@ export default function FaturaList() {
             key={fatura._id}
             fatura={fatura}
             onGeneratePDF={gerarPDF}
-            onUpload={() => setModalVisible(true)}
+            onUpload={() => handleUpload(fatura._id)} 
           />
         ))}
       </div>
 
       <div className="new-fatura-container">
-        <button className="new-fatura-button" onClick={() => setModalVisible(true)}>
+        <button className="new-fatura-button" onClick={() => setModalFaturaVisible(true)}>
           Nova Fatura
         </button>
       </div>
 
+      {/* Modal para criar nova fatura */}
       <Modal
-        visible={modalVisible}
-        onClose={() => setModalVisible(false)}
+        visible={modalFaturaVisible}
+        onClose={() => setModalFaturaVisible(false)}
         onSubmit={handleSubmit}
         onFileChange={handleFileChange}
         onTypeChange={setMeasureType}
         measureType={measureType}
         file={file}
+      />
+
+      {/* Modal para enviar o comprovante de pagamento */}
+      <ModalComprovante
+        visible={modalComprovanteVisible}
+        onClose={() => setModalComprovanteVisible(false)} 
+        faturaId={faturaId} 
       />
     </div>
   );
