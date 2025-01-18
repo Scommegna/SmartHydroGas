@@ -17,7 +17,7 @@ const storage = multer.diskStorage({
   filename: (req: Request, file: any, cb: CBMulterType) => {
     const { id } = req.session;
 
-    const date = formatDate(new Date(), "?");
+    const date = formatDate(new Date(), "_");
 
     const uniqueFileName = `${id}-${date}`;
 

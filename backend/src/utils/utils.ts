@@ -78,7 +78,7 @@ export function formatDate(date: Date, separator: string) {
 export function extractDate(text: string) {
   const datePart = text.split("-").pop();
 
-  return datePart?.replace(/\?/g, "-");
+  return datePart?.replace(/\_/g, "-");
 }
 
 export function generateRandomNumber() {
