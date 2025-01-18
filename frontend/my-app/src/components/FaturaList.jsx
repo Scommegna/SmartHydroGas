@@ -76,7 +76,7 @@ function ModalComprovante({ visible, onClose, faturaId }) {
     formData.append('comprovante', file);
 
     try {
-      const response = await fetch('/proof', {
+      const response = await fetch('http://localhost:80/api/proof', {
         method: 'POST',
         body: formData,
       });
@@ -130,7 +130,7 @@ export default function FaturaList() {
   useEffect(() => {
     const fetchFaturas = async () => {
       try {
-        const response = await axios.get("http://localhost/list", { withCredentials: true });
+        const response = await axios.get("http://localhost:80/api/list", { withCredentials: true });
         setFaturaData(response.data.userBillings);
       } catch (error) {
         console.error("Erro ao buscar dados das faturas:", error);
@@ -142,7 +142,7 @@ export default function FaturaList() {
 
   const gerarPDF = async (faturaId) => {
     try {
-      const response = await axios.post(`http://localhost/faturas/${faturaId}/gerar-pdf`, {}, { responseType: 'blob' });
+      const response = await axios.post(`http://localhost/api/faturas/${faturaId}/gerar-pdf`, {}, { responseType: 'blob' });
       const file = new Blob([response.data], { type: 'application/pdf' });
       const fileURL = URL.createObjectURL(file);
       window.open(fileURL);
@@ -171,7 +171,7 @@ export default function FaturaList() {
     formData.append("file", file);
 
     try {
-      await axios.post("http://localhost/upload", formData, {
+      await axios.post("http://localhost:80/api/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });

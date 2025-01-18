@@ -18,7 +18,7 @@ export default function Main({ onLogout }) {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await axios.get("http://localhost/profile", {
+      const response = await axios.get("http://localhost:80/api/profile", {
         withCredentials: true, 
         headers: {
           "Content-Type": "application/json",

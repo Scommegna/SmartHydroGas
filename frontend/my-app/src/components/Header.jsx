@@ -10,7 +10,7 @@ export default function Header({ onLogout, onProfileClick, onFaturaClick }) {
     if (action === "logout") {
       try {
         const response = await axios.post(
-          "http://localhost/logout",
+          "http://localhost:80/api/logout",
           {},
           { withCredentials: true } 
         );

@@ -22,16 +22,15 @@ function AppWithHeaderAndFooter() {
   const [role, setRole] = useState(null);
 
   const handleLogout = () => {
-    setRole(null); // Limpa o estado de autenticação
-    navigate("/login"); // Redireciona para a página de login
+    setRole(null); 
+    navigate("/login");
   };
 
-  // Chama o handleLogout sempre que a página de login for acessada
   useEffect(() => {
     if (location.pathname === "/login") {
-      handleLogout(); // Chama o logout se a página de login for acessada
+      handleLogout();
     }
-  }, [location.pathname]); // Só dispara quando a rota mudar
+  }, [location.pathname]);
 
   const handleLoginSuccess = (role) => {
     setRole(role);

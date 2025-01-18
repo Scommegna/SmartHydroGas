@@ -17,7 +17,7 @@ export const LoginSmartHydrogas = ({ onLoginSuccess }) => {
 
     setError("");
     try {
-      const response = await axios.post("http://localhost:80/login", {
+      const response = await axios.post("http://localhost:80/api/login", {
         email,
         password
       },
