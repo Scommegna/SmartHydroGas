@@ -4,6 +4,72 @@ import "./FaturaList.css";
 import PDF from "../assets/pdf.png";
 import Upload from "../assets/upload.png";
 
+function Modal({ visible, onClose, onSubmit, onFileChange, onTypeChange, measureType, file }) {
+  if (!visible) return null;
+
+  return (
+    <div className="modal" role="dialog" aria-labelledby="modal-title">
+      <div className="modal-content">
+        <h2 id="modal-title">Tipo de Medição</h2>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="measureType"
+              value="WATER"
+              checked={measureType === "WATER"}
+              onChange={() => onTypeChange("WATER")}
+            />
+            Água
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="measureType"
+              value="GAS"
+              checked={measureType === "GAS"}
+              onChange={() => onTypeChange("GAS")}
+            />
+            Gás
+          </label>
+        </div>
+        <div>
+          <label>
+            Foto do medidor de consumo:
+            <input type="file" onChange={onFileChange} />
+            <p>Por favor, tire uma foto legível do medidor de consumo para registro correto.</p>
+          </label>
+        </div>
+        <button onClick={onSubmit}>Enviar</button>
+        <button onClick={onClose}>Cancelar</button>
+      </div>
+    </div>
+  );
+}
+
+function FaturaRow({ fatura, onGeneratePDF, onUpload }) {
+  return (
+    <div className="fatura-row">
+      <span className="fatura-cell">{fatura._id}</span>
+      <span className="fatura-cell">{new Date(fatura.measure_datetime).toLocaleDateString()}</span>
+      <button
+        className="fatura-action-button view-button"
+        aria-label="Visualizar fatura"
+        onClick={() => onGeneratePDF(fatura._id)}
+      >
+        <img src={PDF} alt="Visualizar" />
+      </button>
+      <button
+        className="fatura-action-button upload-button"
+        aria-label="Enviar comprovante"
+        onClick={onUpload}
+      >
+        <img src={Upload} alt="Enviar comprovante" />
+      </button>
+    </div>
+  );
+}
+
 export default function FaturaList() {
   const [faturaData, setFaturaData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -35,7 +101,12 @@ export default function FaturaList() {
   };
 
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    const selectedFile = event.target.files[0];
+    if (selectedFile && selectedFile.size > 5 * 1024 * 1024) {
+      alert("O arquivo deve ter menos de 5MB.");
+      return;
+    }
+    setFile(selectedFile);
   };
 
   const handleSubmit = async () => {
@@ -49,25 +120,18 @@ export default function FaturaList() {
     formData.append("file", file);
 
     try {
-      const response = await axios.post("http://localhost/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      await axios.post("http://localhost/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       });
-
       alert("Fatura criada com sucesso!");
-      setModalVisible(false);  
+      setModalVisible(false);
       setMeasureType(null);
-      setFile(null);  
+      setFile(null);
     } catch (error) {
       console.error("Erro ao enviar a medição:", error);
       alert("Erro ao criar a fatura.");
     }
-  };
-
-  const handleCheckboxChange = (value) => {
-    setMeasureType(value);
   };
 
   return (
@@ -79,79 +143,31 @@ export default function FaturaList() {
           <span className="fatura-header-cell">Visualizar</span>
           <span className="fatura-header-cell">Enviar Comprovante</span>
         </div>
-
-        {/* Lista de Faturas */}
-        {faturaData.map((fatura, index) => (
-          <div key={fatura._id} className={`fatura-row ${index % 2 === 0 ? 'fatura-row-dark' : 'fatura-row-light'}`}>
-            <span className="fatura-cell">{fatura._id}</span>
-            <span className="fatura-cell">{new Date(fatura.measure_datetime).toLocaleDateString()}</span>
-            <button
-              className="fatura-action-button view-button"
-              aria-label="Visualizar fatura"
-              onClick={() => gerarPDF(fatura._id)}
-            >
-              <img src={PDF} alt="Visualizar" />
-            </button>
-            <button
-              className="fatura-action-button upload-button"
-              aria-label="Enviar comprovante"
-              onClick={() => setModalVisible(true)}
-            >
-              <img src={Upload} alt="Enviar comprovante" />
-            </button>
-          </div>
+        {faturaData.map((fatura) => (
+          <FaturaRow
+            key={fatura._id}
+            fatura={fatura}
+            onGeneratePDF={gerarPDF}
+            onUpload={() => setModalVisible(true)}
+          />
         ))}
       </div>
 
-      {/* Div com o botão "Nova Fatura" */}
       <div className="new-fatura-container">
-        <button
-          className="new-fatura-button"
-          onClick={() => setModalVisible(true)}
-        >
+        <button className="new-fatura-button" onClick={() => setModalVisible(true)}>
           Nova Fatura
         </button>
       </div>
 
-      {/* Modal de tipo de medição */}
-      {modalVisible && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Tipo de Medição</h2>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name="measureType"
-                  value="Água"
-                  checked={measureType === "Água"}
-                  onChange={() => handleCheckboxChange("Água")}
-                />
-                Água
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="measureType"
-                  value="Gás"
-                  checked={measureType === "Gás"}
-                  onChange={() => handleCheckboxChange("Gás")}
-                />
-                Gás
-              </label>
-            </div>
-            <div>
-              <label>
-                Foto do medidor de consumo:
-                <input type="file" onChange={handleFileChange} />
-                <p>Por favor, tire uma foto legível do medidor de consumo para que possamos registrar a medição corretamente.</p>
-              </label>
-            </div>
-            <button onClick={handleSubmit}>Enviar</button>
-            <button onClick={() => setModalVisible(false)}>Cancelar</button>
-          </div>
-        </div>
-      )}
+      <Modal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSubmit={handleSubmit}
+        onFileChange={handleFileChange}
+        onTypeChange={setMeasureType}
+        measureType={measureType}
+        file={file}
+      />
     </div>
   );
 }
