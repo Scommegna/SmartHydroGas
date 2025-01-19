@@ -23,7 +23,6 @@ export const createUser = async (req: Request, res: Response) => {
 
   if (!firstName || !lastName || !cpf || !address || !email || !password) {
     const { statusCode, errorCode } = BadRequestError();
-
     return res.status(statusCode).json({
       errorCode,
       error_description: "All the request arguments were not provided.",
@@ -31,10 +30,8 @@ export const createUser = async (req: Request, res: Response) => {
   }
 
   const hasUser = await UserModel.findOne({ $or: [{ cpf }, { email }] });
-
   if (hasUser) {
     const { statusCode, errorCode } = DoubleReportError();
-
     return res.status(statusCode).json({
       errorCode,
       error_description: "User already exists.",
@@ -43,7 +40,6 @@ export const createUser = async (req: Request, res: Response) => {
 
   if (!isValidEmail(email)) {
     const { statusCode, errorCode } = BadRequestError();
-
     return res.status(statusCode).json({
       errorCode,
       error_description: "Email format is not valid.",
@@ -52,7 +48,6 @@ export const createUser = async (req: Request, res: Response) => {
 
   if (!isValidCPF(cpf)) {
     const { statusCode, errorCode } = BadRequestError();
-
     return res.status(statusCode).json({
       errorCode,
       error_description: "CPF not valid.",
@@ -72,8 +67,8 @@ export const createUser = async (req: Request, res: Response) => {
   });
 
   return res
-    .status(200)
-    .json({ statusCode: 200, message: "User created with success." });
+    .status(201)
+    .json({ statusCode: 201, message: "User created with success." });
 };
 
 export const login = async (req: Request, res: Response) => {
@@ -112,7 +107,10 @@ export const login = async (req: Request, res: Response) => {
     });
   }
 
-  const isPasswordCorrect = await compareHashedPassword(password, user.password);
+  const isPasswordCorrect = await compareHashedPassword(
+    password,
+    user.password
+  );
 
   if (!isPasswordCorrect) {
     const { statusCode, errorCode } = BadRequestError();
@@ -130,7 +128,6 @@ export const login = async (req: Request, res: Response) => {
     name: user.name,
     address: user.address,
   };
-  console.log(req.session.userData)
 
   return res.status(200).json({
     message: "Login successful.",
@@ -141,7 +138,6 @@ export const login = async (req: Request, res: Response) => {
 export const logout = async (req: Request, res: Response) => {
   if (!req.session.userData) {
     const { statusCode, errorCode } = BadRequestError();
-
     return res.status(statusCode).json({
       errorCode,
       error_description: "User is not logged in.",
@@ -164,7 +160,6 @@ export const editData = async (req: Request, res: Response) => {
 
   if (updateUser.matchedCount === 0) {
     const { statusCode, errorCode } = NotFoundError("user");
-
     return res.status(statusCode).json({
       errorCode,
       error_description: "User not found.",
@@ -184,7 +179,6 @@ export const deleteUser = async (req: Request, res: Response) => {
 
   if (deletedUser.deletedCount === 0) {
     const { statusCode, errorCode } = NotFoundError("user");
-
     return res.status(statusCode).json({
       errorCode,
       error_description: "User not found.",
@@ -201,7 +195,8 @@ export const getProfile = (req: Request, res: Response) => {
   if (!req.session.userData) {
     return res.status(401).json({
       errorCode: "USER_NOT_AUTHENTICATED",
-      error_description: "User is not authenticated. Please login to access the profile.",
+      error_description:
+        "User is not authenticated. Please login to access the profile.",
     });
   }
 
@@ -210,7 +205,8 @@ export const getProfile = (req: Request, res: Response) => {
   if (!name || !email || !cpf || !address) {
     return res.status(400).json({
       errorCode: "USER_PROFILE_INCOMPLETE",
-      error_description: "Some user profile data is missing. Please ensure the profile is complete.",
+      error_description:
+        "Some user profile data is missing. Please ensure the profile is complete.",
     });
   }
 
@@ -225,3 +221,30 @@ export const getProfile = (req: Request, res: Response) => {
   });
 };
 
+export const getClients = async (req: Request, res: Response) => {
+  try {
+    const clients = await UserModel.find(
+      { type: "CLIENT" },
+      { name: 1, _id: 1 }
+    );
+
+    if (clients.length === 0) {
+      const { statusCode, errorCode } = NotFoundError("clients");
+      return res.status(statusCode).json({
+        errorCode,
+        error_description: "No clients found.",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Clients retrieved successfully.",
+      clients,
+    });
+  } catch (error) {
+    const { statusCode, errorCode } = BadRequestError();
+    return res.status(statusCode).json({
+      errorCode,
+      error_description: "An error occurred while retrieving clients.",
+    });
+  }
+};

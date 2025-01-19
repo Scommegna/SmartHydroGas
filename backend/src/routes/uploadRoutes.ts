@@ -1,7 +1,6 @@
 import express from "express";
 
 import { isAdmin, isAuthenticated } from "../middlewares/authMiddlewares";
-
 import { upload } from "../middlewares/multerMiddleware";
 
 import {
@@ -10,6 +9,8 @@ import {
   getBillingsReportData,
   getListOfMeasures,
   sendProofOfPayment,
+  getUnpaidBillings,
+  markBillingAsPaid,
 } from "../controllers/uploadControllers";
 
 const router = express.Router();
@@ -29,10 +30,11 @@ router.get(
   isAdmin,
   getBillingsReportData
 );
-router.post(
-  "/generate-pdf/:faturaId", 
+router.get("/unpaidBillings", isAuthenticated, isAdmin, getUnpaidBillings);
+router.patch(
+  "/billing/:billingId/mark-paid",
   isAuthenticated,
-  createUpload  
+  isAdmin,
+  markBillingAsPaid
 );
-
 export { router };

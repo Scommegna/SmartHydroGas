@@ -288,3 +288,84 @@ export const getBillingsReportData = async (req: Request, res: Response) => {
 
   return;
 };
+
+export const getUnpaidBillings = async (req: Request, res: Response) => {
+  try {
+    const unpaidBillings = await UploadModel.find(
+      { status: { $ne: "PAID" } },
+      "id measure_type measured_value billingValue"
+    );
+
+    // Filtrando as faturas que não possuem todos os campos necessários
+    const validBillings = unpaidBillings.filter(
+      (billing) =>
+        billing.measure_type &&
+        billing.measured_value !== undefined &&
+        billing.billingValue !== undefined
+    );
+
+    if (validBillings.length === 0) {
+      const { statusCode, errorCode } = NotFoundError("UNPAID_BILLINGS");
+      return res.status(statusCode).json({
+        errorCode,
+        error_description: "No unpaid billings found.",
+      });
+    }
+
+    return res.status(200).json({ unpaidBillings: validBillings });
+  } catch (error) {
+    const { statusCode, errorCode } = BadRequestError();
+    return res.status(statusCode).json({
+      errorCode,
+      error_description:
+        "An error occurred while fetching the unpaid billings.",
+    });
+  }
+};
+
+export const markBillingAsPaid = async (req: Request, res: Response) => {
+  const { billingId } = req.params; // ID da fatura via parâmetro
+
+  if (!billingId) {
+    const { statusCode, errorCode } = BadRequestError();
+    return res.status(statusCode).json({
+      errorCode,
+      error_description: "Billing ID is required.",
+    });
+  }
+
+  const billing = await UploadModel.findOne({ _id: new ObjectId(billingId) });
+
+  if (!billing) {
+    const { statusCode, errorCode } = NotFoundError("BILLING");
+    return res.status(statusCode).json({
+      errorCode,
+      error_description: "Billing not found.",
+    });
+  }
+
+  if (billing.status === "PAID") {
+    const { statusCode, errorCode } = BadRequestError();
+    return res.status(statusCode).json({
+      errorCode,
+      error_description: "Billing is already marked as PAID.",
+    });
+  }
+
+  const updatedBilling = await UploadModel.updateOne(
+    { _id: new ObjectId(billingId) },
+    { status: "PAID" }
+  );
+
+  if (!updatedBilling || updatedBilling.modifiedCount === 0) {
+    const { statusCode, errorCode } = BadRequestError();
+    return res.status(statusCode).json({
+      errorCode,
+      error_description: "Failed to update billing status.",
+    });
+  }
+
+  return res.status(200).json({
+    message: "Billing status updated to PAID.",
+  });
+};

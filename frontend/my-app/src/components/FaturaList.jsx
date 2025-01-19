@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./FaturaList.css";
-import PDF from "../assets/pdf.png";
 import Upload from "../assets/upload.png";
 
-function Modal({ visible, onClose, onSubmit, onFileChange, onTypeChange, measureType, file }) {
+function Modal({
+  visible,
+  onClose,
+  onSubmit,
+  onFileChange,
+  onTypeChange,
+  measureType,
+  file,
+}) {
   if (!visible) return null;
 
   return (
@@ -37,7 +44,10 @@ function Modal({ visible, onClose, onSubmit, onFileChange, onTypeChange, measure
           <label>
             Foto do medidor de consumo:
             <input type="file" onChange={onFileChange} />
-            <p>Por favor, tire uma foto legível do medidor de consumo para registro correto.</p>
+            <p>
+              Por favor, tire uma foto legível do medidor de consumo para
+              registro correto.
+            </p>
           </label>
         </div>
         <button onClick={onSubmit}>Enviar</button>
@@ -47,108 +57,137 @@ function Modal({ visible, onClose, onSubmit, onFileChange, onTypeChange, measure
   );
 }
 
-function ModalComprovante({ visible, onClose, faturaId }) {
+function ModalComprovante({ visible, onClose, faturaId, onUploadImage }) {
   const [file, setFile] = useState(null);
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState("");
   const [isUploading, setIsUploading] = useState(false);
 
   if (!visible) return null;
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    if (selectedFile && selectedFile.type.startsWith('image/')) {
+    if (selectedFile && selectedFile.type.startsWith("image/")) {
       setFile(selectedFile);
-      setStatus('');
+      setStatus("");
     } else {
-      setStatus('Por favor, selecione uma imagem válida.');
+      setStatus("Por favor, selecione uma imagem válida.");
       setFile(null);
     }
   };
 
   const handleSubmit = async () => {
     if (!file) {
-      setStatus('Por favor, selecione um arquivo.');
+      setStatus("Por favor, selecione um arquivo.");
       return;
     }
 
     setIsUploading(true);
-    const formData = new FormData();
-    formData.append('comprovante', file);
-
-    try {
-      const response = await fetch('http://localhost:80/api/proof', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        setStatus('Comprovante enviado com sucesso!');
-      } else {
-        setStatus(result.message || 'Falha ao enviar o comprovante.');
-      }
-    } catch (error) {
-      setStatus('Erro ao enviar o comprovante.');
-    } finally {
-      setIsUploading(false);
-    }
+    await onUploadImage(faturaId, file);
+    setIsUploading(false);
   };
+
+  return (
+    <div className="modal" role="dialog" aria-labelledby="modal-title">
+      <div className="modal-content">
+        <h2 id="modal-title">Enviar Comprovante</h2>
+        <div>
+          <label>
+            Foto do comprovante:
+            <input type="file" onChange={handleFileChange} />
+            <p>
+              Por favor, selecione uma imagem legível do comprovante de
+              pagamento.
+            </p>
+          </label>
+        </div>
+        <button onClick={handleSubmit} disabled={isUploading}>
+          {isUploading ? "Enviando..." : "Salvar"}
+        </button>
+        <button onClick={onClose}>Cancelar</button>
+        {status && <p>{status}</p>}
+      </div>
+    </div>
+  );
 }
 
-function FaturaRow({ fatura, onGeneratePDF, onUploadImage }) {
+function FaturaRow({ fatura, onUpload }) {
   return (
     <div className="fatura-row">
       <span className="fatura-cell">{fatura._id}</span>
-      <span className="fatura-cell">{new Date(fatura.measure_datetime).toLocaleDateString()}</span>
-      <button
-        className="fatura-action-button view-button"
-        aria-label="Visualizar fatura"
-        onClick={() => onGeneratePDF(fatura._id)}
-      >
-        <img src={PDF} alt="Visualizar" />
-      </button>
-      <button
-        className="fatura-action-button upload-button"
-        aria-label="Enviar comprovante"
-        onClick={() => onUploadImage(fatura._id)} 
-      >
-        <img src={Upload} alt="Enviar comprovante" />
-      </button>
+      <span className="fatura-cell">
+        {new Date(fatura.measure_datetime).toLocaleDateString()}
+      </span>
+      <span className="fatura-cell">
+        <button
+          className="fatura-action-button upload-button"
+          aria-label="Enviar comprovante"
+          onClick={() => onUpload(fatura)}
+        >
+          <img src={Upload} alt="Enviar comprovante" />
+        </button>
+      </span>
     </div>
   );
 }
 
 export default function FaturaList() {
   const [faturaData, setFaturaData] = useState([]);
-  const [modalFaturaVisible, setModalFaturaVisible] = useState(false); 
-  const [modalComprovanteVisible, setModalComprovanteVisible] = useState(false); 
+  const [modalFaturaVisible, setModalFaturaVisible] = useState(false);
+  const [modalComprovanteVisible, setModalComprovanteVisible] = useState(false);
   const [faturaId, setFaturaId] = useState(null);
   const [file, setFile] = useState(null);
   const [measureType, setMeasureType] = useState(null);
+  const [status, setStatus] = useState("");
+
+  const fetchFaturas = async () => {
+    try {
+      const response = await axios.get("http://localhost:80/api/list", {
+        withCredentials: true,
+      });
+      setFaturaData(response.data.userBillings);
+    } catch (error) {
+      console.error("Erro ao buscar dados das faturas:", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchFaturas = async () => {
-      try {
-        const response = await axios.get("http://localhost:80/api/list", { withCredentials: true });
-        setFaturaData(response.data.userBillings);
-      } catch (error) {
-        console.error("Erro ao buscar dados das faturas:", error);
-      }
-    };
-
     fetchFaturas();
   }, []);
 
-  const gerarPDF = async (faturaId) => {
+  const handleUploadImage = async (faturaId, file) => {
+    console.log("Enviando comprovante para a fatura:", faturaId); // Verifique o faturaId aqui
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("faturaId", faturaId);
+
     try {
-      const response = await axios.post(`http://localhost/api/faturas/${faturaId}/gerar-pdf`, {}, { responseType: 'blob' });
-      const file = new Blob([response.data], { type: 'application/pdf' });
-      const fileURL = URL.createObjectURL(file);
-      window.open(fileURL);
+      const response = await axios.post(
+        "http://localhost:80/api/proof",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 200) {
+        alert("Comprovante enviado com sucesso!");
+        setModalComprovanteVisible(false);
+        fetchFaturas();
+      } else {
+        throw new Error("Falha ao enviar o comprovante.");
+      }
     } catch (error) {
-      console.error("Erro ao gerar o PDF da fatura:", error);
+      console.error("Erro ao enviar o comprovante:", error);
+      alert("Erro ao enviar o comprovante.");
     }
+  };
+
+  const handleUpload = (fatura) => {
+    setFaturaId(fatura._id);
+    setModalComprovanteVisible(true);
   };
 
   const handleFileChange = (event) => {
@@ -171,23 +210,40 @@ export default function FaturaList() {
     formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:80/api/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-        withCredentials: true,
-      });
-      alert("Fatura criada com sucesso!");
-      setModalFaturaVisible(false);
-      setMeasureType(null);
-      setFile(null);
+      const response = await axios.post(
+        "http://localhost:80/api/upload",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true,
+          responseType: "blob",
+        }
+      );
+
+      if (response.status === 200) {
+        const file = new Blob([response.data], { type: "application/pdf" });
+
+        const fileURL = URL.createObjectURL(file);
+
+        const link = document.createElement("a");
+        link.href = fileURL;
+        link.download = `Fatura.pdf`;
+
+        link.click();
+
+        alert("Fatura criada com sucesso!");
+        setModalFaturaVisible(false);
+        setMeasureType(null);
+        setFile(null);
+
+        fetchFaturas();
+      } else {
+        throw new Error("Erro ao gerar o PDF.");
+      }
     } catch (error) {
       console.error("Erro ao enviar a medição:", error);
       alert("Erro ao criar a fatura.");
     }
-  };
-
-  const handleUpload = (faturaId) => {
-    setFaturaId(faturaId);
-    setModalComprovanteVisible(true);
   };
 
   return (
@@ -196,21 +252,18 @@ export default function FaturaList() {
         <div className="fatura-header-row">
           <span className="fatura-header-cell">Número da Fatura</span>
           <span className="fatura-header-cell">Mês de Referência</span>
-          <span className="fatura-header-cell">Visualizar</span>
           <span className="fatura-header-cell">Enviar Comprovante</span>
         </div>
         {faturaData.map((fatura) => (
-          <FaturaRow
-            key={fatura._id}
-            fatura={fatura}
-            onGeneratePDF={gerarPDF}
-            onUpload={() => handleUpload(fatura._id)} 
-          />
+          <FaturaRow key={fatura._id} fatura={fatura} onUpload={handleUpload} />
         ))}
       </div>
 
       <div className="new-fatura-container">
-        <button className="new-fatura-button" onClick={() => setModalFaturaVisible(true)}>
+        <button
+          className="new-fatura-button"
+          onClick={() => setModalFaturaVisible(true)}
+        >
           Nova Fatura
         </button>
       </div>
@@ -229,8 +282,9 @@ export default function FaturaList() {
       {/* Modal para enviar o comprovante de pagamento */}
       <ModalComprovante
         visible={modalComprovanteVisible}
-        onClose={() => setModalComprovanteVisible(false)} 
-        faturaId={faturaId} 
+        onClose={() => setModalComprovanteVisible(false)}
+        faturaId={faturaId}
+        onUploadImage={handleUploadImage}
       />
     </div>
   );

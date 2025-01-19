@@ -7,28 +7,143 @@ import riEyeCloseLine from "../../assets/ri-eye-close-line.svg";
 import riUserLine from "../../assets/ri-user-line.svg";
 import "./style.css";
 
+// Modal para criar usuário
+const CreateUserModal = ({ visible, onClose, onSubmit }) => {
+  const [name, setName] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [status, setStatus] = useState("");
+
+  if (!visible) return null;
+
+  const handleSubmit = async () => {
+    if (!name || !cpf || !address || !email || !password) {
+      setStatus("Todos os campos são obrigatórios.");
+      return;
+    }
+
+    const nameParts = name.split(" ");
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(" ");
+
+    const userData = {
+      firstName,
+      lastName,
+      cpf,
+      address,
+      email,
+      password,
+    };
+    console.log("Dados para criação de usuário:", userData);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:80/api/createAccount",
+        userData,
+        { withCredentials: false }
+      );
+
+      if (response.status === 201) {
+        alert("Usuário criado com sucesso!");
+        onClose();
+      } else {
+        throw new Error("Erro ao criar o usuário.");
+      }
+    } catch (error) {
+      console.error("Erro ao criar o usuário:", error);
+      alert("Erro ao criar o usuário.");
+    }
+  };
+
+  return (
+    <div className="modal" role="dialog" aria-labelledby="modal-title">
+      <div className="modal-content">
+        <h2 id="modal-title">Criar Usuário</h2>
+        <div>
+          <label>
+            Nome:
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            CPF:
+            <input
+              type="text"
+              value={cpf}
+              onChange={(e) => setCpf(e.target.value)}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Endereço:
+            <input
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Email:
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Senha:
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+        </div>
+        <button onClick={handleSubmit}>Criar</button>
+        <button onClick={onClose}>Cancelar</button>
+        {status && <p>{status}</p>}
+      </div>
+    </div>
+  );
+};
+
 export const LoginSmartHydrogas = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [createUserModalVisible, setCreateUserModalVisible] = useState(false);
 
   const handleLogin = async (event) => {
     event.preventDefault();
 
     setError("");
     try {
-      const response = await axios.post("http://localhost:80/api/login", {
-        email,
-        password
-      },
-      {
-        withCredentials: true 
-      });
-        console.log(response.data)
-        const { typeOfClient } = response.data.typeOfClient;
-        onLoginSuccess(typeOfClient);
+      const response = await axios.post(
+        "http://localhost:80/api/login",
+        { email, password },
+        { withCredentials: true }
+      );
+      console.log(response.data);
+      const { typeOfClient } = response.data.typeOfClient;
+      onLoginSuccess(typeOfClient);
     } catch (err) {
-      console.error("Erro ao fazer login:", err.response ? err.response.data.message : err.message);
+      console.error(
+        "Erro ao fazer login:",
+        err.response ? err.response.data.message : err.message
+      );
+      setError("Falha ao fazer login, tente novamente.");
     }
   };
 
@@ -45,18 +160,17 @@ export const LoginSmartHydrogas = ({ onLoginSuccess }) => {
 
           <div className="login-rectangle" />
           <div className="login-rectangle-2" />
-
           <div className="login-rectangle-1" />
-
           <div className="blob-5" />
           <img className="blob" alt="Blob" src={image} />
 
           <p className="esqueceu-sua-senha">
-            <span className="text-wrapper">
-              Esqueceu sua senha? <br />
+            <span
+              className="login-span"
+              onClick={() => setCreateUserModalVisible(true)}
+            >
+              Criar usuário
             </span>
-
-            <span className="login-span">Clique aqui para recuperá-la</span>
           </p>
 
           <form className="login-form" onSubmit={handleLogin}>
@@ -117,6 +231,13 @@ export const LoginSmartHydrogas = ({ onLoginSuccess }) => {
           </p>
         </div>
       </div>
+
+      {/* Modal de criação de usuário */}
+      <CreateUserModal
+        visible={createUserModalVisible}
+        onClose={() => setCreateUserModalVisible(false)}
+        onSubmit={() => {}}
+      />
     </div>
   );
 };
