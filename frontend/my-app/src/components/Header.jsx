@@ -12,7 +12,7 @@ export default function Header({ onLogout, onProfileClick, onFaturaClick }) {
         const response = await axios.post(
           "http://localhost:80/api/logout",
           {},
-          { withCredentials: true } 
+          { withCredentials: true }
         );
         onLogout();
       } catch (error) {
@@ -37,6 +37,7 @@ export default function Header({ onLogout, onProfileClick, onFaturaClick }) {
           href="#"
           className="nav-link"
           onClick={(e) => handleAction("profile", e)}
+          id="profile"
         >
           Meu Perfil
         </a>
@@ -44,6 +45,7 @@ export default function Header({ onLogout, onProfileClick, onFaturaClick }) {
           href="#"
           className="nav-link"
           onClick={(e) => handleAction("faturas", e)}
+          id="faturas"
         >
           Visualizar Faturas
         </a>

@@ -50,7 +50,9 @@ function Modal({
             </p>
           </label>
         </div>
-        <button onClick={onSubmit}>Enviar</button>
+        <button className="submit" onClick={onSubmit}>
+          Enviar
+        </button>
         <button onClick={onClose}>Cancelar</button>
       </div>
     </div>
@@ -100,7 +102,7 @@ function ModalComprovante({ visible, onClose, faturaId, onUploadImage }) {
             </p>
           </label>
         </div>
-        <button onClick={handleSubmit} disabled={isUploading}>
+        <button onClick={handleSubmit} disabled={isUploading} className="send">
           {isUploading ? "Enviando..." : "Salvar"}
         </button>
         <button onClick={onClose}>Cancelar</button>
