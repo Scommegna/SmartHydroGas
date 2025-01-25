@@ -4,12 +4,12 @@ import "./AdminPage.css";
 import axios from "axios";
 
 const handleDownload = async () => {
-  console.log("Iniciando a requisição...");
   try {
     const response = await axios.get(
       "http://localhost:80/api/billingsReportData",
       {
         withCredentials: true,
+        responseType: "blob",
       }
     );
     console.log("Resposta recebida:", response);

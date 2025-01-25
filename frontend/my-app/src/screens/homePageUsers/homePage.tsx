@@ -45,7 +45,7 @@ export default function Main({ onLogout }) {
 
   const handleSaveClick = async () => {
     try {
-      const response = await axios.patch("http://localhost/editData", editData, {
+      const response = await axios.patch("http://localhost:80/api/editData", editData, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",

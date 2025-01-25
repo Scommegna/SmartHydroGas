@@ -7,7 +7,6 @@ import riEyeCloseLine from "../../assets/ri-eye-close-line.svg";
 import riUserLine from "../../assets/ri-user-line.svg";
 import "./style.css";
 
-// Modal para criar usuário
 const CreateUserModal = ({ visible, onClose, onSubmit }) => {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
@@ -36,7 +35,6 @@ const CreateUserModal = ({ visible, onClose, onSubmit }) => {
       email,
       password,
     };
-    console.log("Dados para criação de usuário:", userData);
 
     try {
       const response = await axios.post(
@@ -135,7 +133,6 @@ export const LoginSmartHydrogas = ({ onLoginSuccess }) => {
         { email, password },
         { withCredentials: true }
       );
-      console.log(response.data);
       const { typeOfClient } = response.data.typeOfClient;
       onLoginSuccess(typeOfClient);
     } catch (err) {

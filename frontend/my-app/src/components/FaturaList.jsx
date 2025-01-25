@@ -155,7 +155,7 @@ export default function FaturaList() {
   }, []);
 
   const handleUploadImage = async (faturaId, file) => {
-    console.log("Enviando comprovante para a fatura:", faturaId); // Verifique o faturaId aqui
+    console.log("Enviando comprovante para a fatura:", faturaId);
     const formData = new FormData();
     formData.append("file", file);
     formData.append("faturaId", faturaId);

@@ -10,7 +10,7 @@ export default function Main() {
           backgroundColor: "#29417e",
           minHeight: "100vh",
           color: "black",
-          marginTop: "80px", // Ajustando a margem superior
+          marginTop: "80px",
         }}
       >
         {/* Welcome Section */}

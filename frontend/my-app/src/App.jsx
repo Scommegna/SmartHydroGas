@@ -33,12 +33,12 @@ function AppWithHeaderAndFooter() {
   }, [location.pathname]);
 
   const handleLoginSuccess = (role) => {
-    setRole(role);
-    if (role === "CLIENT") {
+    // setRole(role);
+    // if (role === "CLIENT") {
       navigate("/main");
-    } else if (role === "ADMIN") {
-      navigate("/admin");
-    }
+    // } else if (role === "ADMIN") {
+      // navigate("/admin");
+    // }
   };
 
   const goToProfilePage = () => {
